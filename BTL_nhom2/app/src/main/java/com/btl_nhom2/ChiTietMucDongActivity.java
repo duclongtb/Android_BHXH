@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -100,13 +101,14 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
 
-                DatePickerDialog dialog = createDialogWithoutDateField();
-                 dialog = new DatePickerDialog(
+                DatePickerDialog dialog = new DatePickerDialog(
                         ChiTietMucDongActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateSetListener,
                         year,month,0);
                  dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                 dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+                 dialog.getDatePicker().findViewById(Resources.getSystem().getIdentifier("day","id","android")).setVisibility(View.GONE);
                  dialog.show();
             }
         });
@@ -126,13 +128,13 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
 
-                DatePickerDialog dialog = createDialogWithoutDateField();
-                dialog = new DatePickerDialog(
+                DatePickerDialog dialog = new DatePickerDialog(
                         ChiTietMucDongActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateSetListener2,
                         year,month,0);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getDatePicker().findViewById(Resources.getSystem().getIdentifier("day","id","android")).setVisibility(View.GONE);
                 dialog.show();
             }
         });
@@ -167,31 +169,6 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
                 editTextDenThang.setText("");
             }
         });
-    }
-
-    private DatePickerDialog createDialogWithoutDateField() {
-        DatePickerDialog dpd = new DatePickerDialog(this, null, 2014, 1, 24);
-        try {
-            java.lang.reflect.Field[] datePickerDialogFields = dpd.getClass().getDeclaredFields();
-            for (java.lang.reflect.Field datePickerDialogField : datePickerDialogFields) {
-                if (datePickerDialogField.getName().equals("mDatePicker")) {
-                    datePickerDialogField.setAccessible(true);
-                    DatePicker datePicker = (DatePicker) datePickerDialogField.get(dpd);
-                    java.lang.reflect.Field[] datePickerFields = datePickerDialogField.getType().getDeclaredFields();
-                    for (java.lang.reflect.Field datePickerField : datePickerFields) {
-                        Log.i("test", datePickerField.getName());
-                        if ("mDaySpinner".equals(datePickerField.getName())) {
-                            datePickerField.setAccessible(true);
-                            Object dayPicker = datePickerField.get(datePicker);
-                            ((View) dayPicker).setVisibility(View.GONE);
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ex) {
-        }
-        return dpd;
     }
 
     public void getWidget(){
