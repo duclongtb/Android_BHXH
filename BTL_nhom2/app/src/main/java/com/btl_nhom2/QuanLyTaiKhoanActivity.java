@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,38 +22,38 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
 
     ImageButton imgBtnBack, imgBtnSearch;
     EditText editTxtSearch;
-    TextView txtXemChiTiet;
     ListView listView;
 
-    ArrayList<users> userArrayList = new ArrayList<users>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_tai_khoan);
 
+        //fakeCSDL
+        fakeCSDL fake = new fakeCSDL();
+
         imgBtnBack = findViewById(R.id.imgBack);
         imgBtnSearch = findViewById(R.id.imgSearch);
         editTxtSearch = findViewById(R.id.editTxtSearch);
-        txtXemChiTiet = findViewById(R.id.txtXemChiTiet);
         listView = findViewById(R.id.lvTaiKhoan);
-
-       // fakeCSDL();
-        users u = new users(1,"Nguyễn Văn A","20/10/2000",true,123123123,"01241442","Hà Nội",8000000,"02/2020","08/2020","Đã đóng","Chưa trả","Chưa nghỉ hưu");
-        users u1 = new users(2,"Nguyễn Văn B","20/10/2000",true,123123123,"01241442","Hà Nội",8000000,"02/2020","08/2020","Đã đóng","Chưa trả","Chưa nghỉ hưu");
-        users u2 = new users(3,"Nguyễn Văn C","20/10/2000",false,123123123,"01241442","Hà Nội",8000000,"02/2020","08/2020","Đã đóng","Chưa trả","Chưa nghỉ hưu");
-        users u3 = new users(4,"Nguyễn Văn D","20/10/2000",true,123123123,"01241442","Hà Nội",8000000,"02/2020","08/2020","Đã đóng","Chưa trả","Chưa nghỉ hưu");
-
-        userArrayList.add(u);
-        userArrayList.add(u1);
-        userArrayList.add(u2);
-        userArrayList.add(u3);
 
         danhsachtaikhoandangky_adapter adapter =
                 new danhsachtaikhoandangky_adapter(QuanLyTaiKhoanActivity.this,
                         R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                        userArrayList);
+                        fake.fakeusers());
         listView.setAdapter(adapter);
 
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle ViTri = new Bundle();
+                ViTri.putInt("GioiTinh", i);
+                Intent intent = new Intent(QuanLyTaiKhoanActivity.this, ChiTietTaiKhoanActivity.class);
+                intent.putExtra("GIOITINH",ViTri);
+                startActivity(intent);
+            }
+        });
 
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +68,6 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
                 timTheoTen();
             }
         });
-
-//      Lỗi
-//        txtXemChiTiet.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
     }
 
 

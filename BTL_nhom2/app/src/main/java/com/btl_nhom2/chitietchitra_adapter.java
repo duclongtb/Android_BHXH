@@ -15,16 +15,16 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class danhsachtaikhoandangky_adapter extends ArrayAdapter {
+public class chitietchitra_adapter extends ArrayAdapter {
     Activity context = null;
-    ArrayList <users> myArray = null;
+    ArrayList<user_detail> myArray = null;
     int resource;
 
-    public danhsachtaikhoandangky_adapter( Activity context, int resource, ArrayList<users> myArray) {
+    public chitietchitra_adapter(Activity context, int resource, ArrayList<user_detail> myArray) {
         super(context, resource, myArray);
-        this.context=context;
-        this.resource=resource;
-        this.myArray=myArray;
+        this.context = context;
+        this.resource = resource;
+        this.myArray = myArray;
     }
 
     @SuppressLint("ResourceAsColor")
@@ -32,17 +32,17 @@ public class danhsachtaikhoandangky_adapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(resource, null);
-        if(myArray.size()>0 && position>=0){
-            final TextView txtMaBHXH, txtHoTen, txtXemChiTiet;
-            txtMaBHXH=(TextView) convertView.findViewById(R.id.txtMaBHXH);
-            txtHoTen=(TextView) convertView.findViewById(R.id.txtHoTen);
-            txtXemChiTiet=(TextView) convertView.findViewById(R.id.txtXemChiTiet);
+        if (myArray.size() > 0 && position >= 0) {
+            final TextView txtTuThang, txtDenThang, txtMucDongBHXH;
+            txtTuThang = convertView.findViewById(R.id.txtTuThang);
+            txtDenThang = convertView.findViewById(R.id.txtDenThang);
+            txtMucDongBHXH = convertView.findViewById(R.id.txtMucDongBHXH);
 
-            final users us = myArray.get(position);
-            txtMaBHXH.setText(us.getMaBHXH()+"");
-            txtHoTen.setText(us.getTenuser());
-            txtXemChiTiet.setText("Xem");
+            final user_detail us = myArray.get(position);
 
+            txtTuThang.setText(us.getTuthang());
+            txtDenThang.setText(us.getDenthang());
+            txtMucDongBHXH.setText("Chưa tính");
         }
         return convertView;
     }

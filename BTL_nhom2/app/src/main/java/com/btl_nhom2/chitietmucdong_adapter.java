@@ -15,12 +15,12 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class danhsachtaikhoandangky_adapter extends ArrayAdapter {
+public class chitietmucdong_adapter extends ArrayAdapter {
     Activity context = null;
-    ArrayList <users> myArray = null;
+    ArrayList <user_detail> myArray = null;
     int resource;
 
-    public danhsachtaikhoandangky_adapter( Activity context, int resource, ArrayList<users> myArray) {
+    public chitietmucdong_adapter( Activity context, int resource, ArrayList<user_detail> myArray) {
         super(context, resource, myArray);
         this.context=context;
         this.resource=resource;
@@ -33,16 +33,20 @@ public class danhsachtaikhoandangky_adapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(resource, null);
         if(myArray.size()>0 && position>=0){
-            final TextView txtMaBHXH, txtHoTen, txtXemChiTiet;
-            txtMaBHXH=(TextView) convertView.findViewById(R.id.txtMaBHXH);
-            txtHoTen=(TextView) convertView.findViewById(R.id.txtHoTen);
-            txtXemChiTiet=(TextView) convertView.findViewById(R.id.txtXemChiTiet);
+            final TextView txtTuThang, txtDenThang, txtTienBHXH, txtTienBHYT, txtTienBHTN;
+            txtTuThang = convertView.findViewById(R.id.txtTuThang);
+            txtDenThang = convertView.findViewById(R.id.txtDenThang);
+            txtTienBHTN = convertView.findViewById(R.id.txtTienBHTN);
+            txtTienBHXH = convertView.findViewById(R.id.txtTienBHXH);
+            txtTienBHYT = convertView.findViewById(R.id.txtTienBHYT);
 
-            final users us = myArray.get(position);
-            txtMaBHXH.setText(us.getMaBHXH()+"");
-            txtHoTen.setText(us.getTenuser());
-            txtXemChiTiet.setText("Xem");
+            final user_detail us = myArray.get(position);
 
+            txtTuThang.setText(us.getTuthang());
+            txtDenThang.setText(us.getDenthang());
+            txtTienBHXH.setText("Chưa tính");
+            txtTienBHYT.setText("Chưa tính");
+            txtTienBHTN.setText("Chưa tính");
         }
         return convertView;
     }

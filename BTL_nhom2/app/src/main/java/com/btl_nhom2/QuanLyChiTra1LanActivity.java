@@ -25,11 +25,13 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
     String arr[]={"Tất cả",
             "Chưa trả",
             "Đã trả"};
-    ArrayList<users> list = new ArrayList<users>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_chi_tra_1_lan);
+
+        //fakeCSDL
+        fakeCSDL fake = new fakeCSDL();
 
         imgBack = findViewById(R.id.imgBack);
         imgSearch = findViewById(R.id.imgSearch);
@@ -56,10 +58,21 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
             }
         });
 
-//        danhsachtaikhoandangky_adapter adapter1 = new danhsachtaikhoandangky_adapter(this,
-//                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-//                list);
-//        listView.setAdapter(adapter1);
+        danhsachtaikhoandangky_adapter adapter1 = new danhsachtaikhoandangky_adapter(this,
+                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                fake.fakeusers());
+        listView.setAdapter(adapter1);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle ViTri = new Bundle();
+                ViTri.putInt("ViTri", i);
+                Intent intent = new Intent(QuanLyChiTra1LanActivity.this, ChiTietChiTraActivity.class);
+                intent.putExtra("VITRI",ViTri);
+                startActivity(intent);
+            }
+        });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

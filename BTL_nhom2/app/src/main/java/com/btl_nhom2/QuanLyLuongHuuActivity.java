@@ -2,6 +2,7 @@ package com.btl_nhom2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,16 +23,18 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
     String arr_[]={"Tất cả",
             "Đã nghỉ hưu",
             "Chưa nghỉ hưu"};
-    ArrayList<users> list = new ArrayList<users>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_luong_huu);
 
+        //fakeCSDL
+        fakeCSDL fake = new fakeCSDL();
+
         imgBack = findViewById(R.id.imgBack);
         imgSearch = findViewById(R.id.imgSearch);
         editSearch = findViewById(R.id.editTxtSearch);
-        listView = findViewById(R.id.lvChiTra);
+        listView = findViewById(R.id.lvLuongHuu);
         spnQLLuongHuu = findViewById(R.id.spnLuongHuu);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -53,11 +56,22 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
             }
         });
 
-//        danhsachtaikhoandangky_adapter userArrayList =
-//                new danhsachtaikhoandangky_adapter(QuanLyLuongHuuActivity.this,
-//                        R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-//                        list);
-//        listView.setAdapter(userArrayList);
+        danhsachtaikhoandangky_adapter adap =
+                new danhsachtaikhoandangky_adapter(QuanLyLuongHuuActivity.this,
+                        R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                        fake.fakeusers());
+        listView.setAdapter(adap);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle ViTri = new Bundle();
+                ViTri.putInt("ViTri", i);
+                Intent intent = new Intent(QuanLyLuongHuuActivity.this, ChiTietLuongHuuActivity.class);
+                intent.putExtra("VITRI",ViTri);
+                startActivity(intent);
+            }
+        });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BTL_nhom2">
-        <activity android:name=".QuanLyLuongHuuActivity"></activity>
+        <activity android:name=".ChiTietLuongHuuActivity"></activity>
+        <activity android:name=".ChiTietChiTraActivity" />
+        <activity android:name=".ChiTietMucDongActivity" />
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/vien" />
+
+        <activity android:name=".ChiTietTaiKhoanActivity" />
+        <activity android:name=".QuanLyLuongHuuActivity" />
         <activity android:name=".DieuKienTra1LanActivity" />
         <activity android:name=".QuanLyChiTra1LanActivity" />
         <activity android:name=".QuanLyMucDongActivity" />

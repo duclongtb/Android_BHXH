@@ -1,7 +1,6 @@
 package com.btl_nhom2;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class users implements Serializable {
     private int maBHXH;
@@ -12,14 +11,10 @@ public class users implements Serializable {
     private String SDT;
     private String diachi;
     private int mucluong;
-    private String tuthang;
-    private String denthang;
-    private String tinhtrangmucdong;
-    private String tinhtrangchitra;
-    private String tinhtrangnghihuu;
 
     public users(){}
-    public users(int maBHXH, String tenuser, String ngaysinh, Boolean gioitinh, int soCMND, String SDT, String diachi, int mucluong, String tuthang, String denthang, String tinhtrangmucdong, String tinhtrangchitra, String tinhtrangnghihuu) {
+
+    public users(int maBHXH, String tenuser, String ngaysinh, Boolean gioitinh, int soCMND, String SDT, String diachi, int mucluong) {
         this.maBHXH = maBHXH;
         this.tenuser = tenuser;
         this.ngaysinh = ngaysinh;
@@ -28,11 +23,6 @@ public class users implements Serializable {
         this.SDT = SDT;
         this.diachi = diachi;
         this.mucluong = mucluong;
-        this.tuthang = tuthang;
-        this.denthang = denthang;
-        this.tinhtrangmucdong = tinhtrangmucdong;
-        this.tinhtrangchitra = tinhtrangchitra;
-        this.tinhtrangnghihuu = tinhtrangnghihuu;
     }
 
     public int getMaBHXH() {
@@ -99,43 +89,4 @@ public class users implements Serializable {
         this.mucluong = mucluong;
     }
 
-    public String getTuthang() {
-        return tuthang;
-    }
-
-    public void setTuthang(String tuthang) {
-        this.tuthang = tuthang;
-    }
-
-    public String getDenthang() {
-        return denthang;
-    }
-
-    public void setDenthang(String denthang) {
-        this.denthang = denthang;
-    }
-
-    public String getTinhtrangmucdong() {
-        return tinhtrangmucdong;
-    }
-
-    public void setTinhtrangmucdong(String tinhtrangmucdong) {
-        this.tinhtrangmucdong = tinhtrangmucdong;
-    }
-
-    public String getTinhtrangchitra() {
-        return tinhtrangchitra;
-    }
-
-    public void setTinhtrangchitra(String tinhtrangchitra) {
-        this.tinhtrangchitra = tinhtrangchitra;
-    }
-
-    public String getTinhtrangnghihuu() {
-        return tinhtrangnghihuu;
-    }
-
-    public void setTinhtrangnghihuu(String tinhtrangnghihuu) {
-        this.tinhtrangnghihuu = tinhtrangnghihuu;
-    }
 }

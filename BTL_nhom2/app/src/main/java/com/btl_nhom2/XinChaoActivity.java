@@ -28,8 +28,8 @@ public class XinChaoActivity extends AppCompatActivity {
         txtQuanLyTaiKhoan = (TextView) findViewById(R.id.txtQuanLyTaiKhoan);
         txtQuanLyLuongHuu = (TextView) findViewById(R.id.txtQuanLyLuongHuu);
 
-        imgQuanLyMucDong.setOnClickListener(new MyEnvent());
         imgBtnQuanLyTaiKhoan.setOnClickListener(new MyEnvent());
+        imgQuanLyMucDong.setOnClickListener(new MyEnvent());
         imgQuanLyChiTra.setOnClickListener(new MyEnvent());
         imgQuanLyLuongHuu.setOnClickListener(new MyEnvent());
 
