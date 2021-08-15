@@ -39,6 +39,13 @@ public class DBhelper extends SQLiteOpenHelper {
     public DBhelper(Context context) {
         super(context, DBNAME, null, DATABASE_VERSION);
     }
+    private static DBhelper sInstance;
+    public static DBhelper getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new DBhelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
@@ -46,6 +53,10 @@ public class DBhelper extends SQLiteOpenHelper {
         try {
             MyDB.execSQL("create Table TAIKHOAN(tentk TEXT primary key, matkhau TEXT)");
             MyDB.execSQL(CREATE_USER_TABLE_SQL);
+            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123450, 'Nguyen Van Duc', '23/07/1950', 1, 1001001, '01241440', 'Hà nội', 8000000)");
+            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123451, 'Nguyen Thanh Thao', '23/07/1980', 0, 1001002, '01241441', 'Hà nam', 8000000)");
+            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123452, 'Nguyen Duc Nam', '23/07/1975', 1, 1001003, '01241442', 'Nam định', 8000000)");
+            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123453, 'Nguyen Thao Tam', '23/07/1955', 0, 1001004, '01241443', 'Bắc Ninh', 8000000)");
         }
         catch (Exception e){
             Log.e(TAG, e.toString());
@@ -59,6 +70,25 @@ public class DBhelper extends SQLiteOpenHelper {
         MyDB.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         onCreate(MyDB);
     }
+
+//    public long insertInfor(String table_name, ContentValues values) {
+//        SQLiteDatabase db = getWritableDatabase();
+//        ArrayList<defaultCSDL> lists = new ArrayList<defaultCSDL>();
+//        ContentValues ct = new ContentValues();
+//        ct.put("maBhxh", u0.maBhxh);
+//        ct.put("tenUser", u0.tenuser);
+//        ct.put("ngaySinh", u0.ngaysinh);
+//        ct.put("gioiTinh", u0.gioitinh);
+//        ct.put("soCmnd", u0.soCMND);
+//        ct.put("SDT", u0.SDT);
+//        ct.put("diaChi", u0.diachi);
+//        ct.put("mucLuong", u0.mucluong);
+//        db.insert(DBhelper.TABLE_USER, null, ct);
+//        return lists;
+//        long rowId = db.insert(table_name, null, values);
+//        db.close();
+//        return rowId;
+//    }
 
     public boolean isTableExists(SQLiteDatabase MyDB,String tableName)
     {
@@ -76,9 +106,9 @@ public class DBhelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public List<users> getAllInfor(String TABLE_NAME) {
+    public ArrayList<users> getAllInfor(String TABLE_NAME) {
         SQLiteDatabase db = getReadableDatabase();
-        List<users> lists = new ArrayList<users>();
+        ArrayList<users> lists = new ArrayList<users>();
         String sql = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
@@ -109,32 +139,32 @@ public class DBhelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public ArrayList<users> initUser(String TABLE_USER){
-        SQLiteDatabase MyDB = this.getWritableDatabase();
-        ArrayList<users> lists = new ArrayList<users>();
-        users u0 = new users(123450, "Nguyen Van A", "23/07/1950", 1, 1001001, "01241440", "Ha noi", 8000000);
-        users u1 = new users(123450, "Nguyen Van B", "23/07/1955", 0, 1001002, "01241441", "Ha nam", 7000000);
-        ContentValues ct = new ContentValues();
-        ct.put("maBhxh", u0.maBHXH);
-        ct.put("tenUser", u0.tenuser);
-        ct.put("ngaySinh", u0.ngaysinh);
-        ct.put("gioiTinh", u0.gioitinh);
-        ct.put("soCmnd", u0.soCMND);
-        ct.put("SDT", u0.SDT);
-        ct.put("diaChi", u0.diachi);
-        ct.put("mucLuong", u0.mucluong);
-
-        ct.put("maBhxh", u1.maBHXH);
-        ct.put("tenUser", u1.tenuser);
-        ct.put("ngaySinh", u1.ngaysinh);
-        ct.put("gioiTinh", u1.gioitinh);
-        ct.put("soCmnd", u1.soCMND);
-        ct.put("SDT", u1.SDT);
-        ct.put("diaChi", u1.diachi);
-        ct.put("mucLuong", u1.mucluong);
-        MyDB.insert(DBhelper.TABLE_USER, null, ct);
-        return lists;
-    }
+//    public ArrayList<users> initUser(String TABLE_USER){
+//        SQLiteDatabase MyDB = this.getWritableDatabase();
+//        ArrayList<users> lists = new ArrayList<users>();
+//        users u0 = new users(123450, "Nguyen Van A", "23/07/1950", 1, 1001001, "01241440", "Ha noi", 8000000);
+//        users u1 = new users(123450, "Nguyen Van B", "23/07/1955", 0, 1001002, "01241441", "Ha nam", 7000000);
+//        ContentValues ct = new ContentValues();
+//        ct.put("maBhxh", u0.maBHXH);
+//        ct.put("tenUser", u0.tenuser);
+//        ct.put("ngaySinh", u0.ngaysinh);
+//        ct.put("gioiTinh", u0.gioitinh);
+//        ct.put("soCmnd", u0.soCMND);
+//        ct.put("SDT", u0.SDT);
+//        ct.put("diaChi", u0.diachi);
+//        ct.put("mucLuong", u0.mucluong);
+//
+//        ct.put("maBhxh", u1.maBHXH);
+//        ct.put("tenUser", u1.tenuser);
+//        ct.put("ngaySinh", u1.ngaysinh);
+//        ct.put("gioiTinh", u1.gioitinh);
+//        ct.put("soCmnd", u1.soCMND);
+//        ct.put("SDT", u1.SDT);
+//        ct.put("diaChi", u1.diachi);
+//        ct.put("mucLuong", u1.mucluong);
+//        MyDB.insert(DBhelper.TABLE_USER, null, ct);
+//        return lists;
+//    }
 
     public Boolean checktentk(String tentk) {
         SQLiteDatabase MyDB = this.getWritableDatabase();

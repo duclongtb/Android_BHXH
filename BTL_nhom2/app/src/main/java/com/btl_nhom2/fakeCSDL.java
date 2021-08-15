@@ -8,10 +8,10 @@ public class fakeCSDL {
 
     // fakeCSDL();
     public ArrayList fakeusers(){
-        users u = new users(1,"Nguyễn Văn A","20/10/2000",1,123123123,"01241442","Hà Nội",8000000);
-        users u1 = new users(2,"Nguyễn Văn B","20/10/2000",1,123123123,"01241442","Hà Nội",8000000);
-        users u2 = new users(3,"Nguyễn Văn C","20/10/2000",0,123123123,"01241442","Hà Nội",8000000);
-        users u3 = new users(4,"Nguyễn Văn D","20/10/1966",1,123123123,"01241442","Hà Nội",8000000);
+        users u = new users(123450,"Nguyen Duc Nam","23/07/1950",1,123123120,"01241440","Ha noi",8000000);
+        users u1 = new users(123451,"Nguyen Phuong Thao","15/02/1980",0,123123121,"01241441","Ha nam",8000000);
+        users u2 = new users(123452,"Nguyen Thanh Tam","20/10/1955",0,123123122,"01241442","Nam dinh",8000000);
+        users u3 = new users(123453,"Nguyen Duc Long","20/10/1966",1,123123123,"01241443","Hai phong",8000000);
 
         usersArrayList.add(u);
         usersArrayList.add(u1);

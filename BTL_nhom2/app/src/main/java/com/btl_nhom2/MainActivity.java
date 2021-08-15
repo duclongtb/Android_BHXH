@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangKy = (Button) findViewById(R.id.btnDangKy);
         DB = new DBhelper(this);
-
+        DB = DBhelper.getInstance(this);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
