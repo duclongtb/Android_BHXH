@@ -279,7 +279,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:gravity="left"
-            android:text="Ghi chú *: Mức đóng BHXH dành cho người lao động: 8%, BHYT 1.5%, BHTN 1%, tổng 10.5%"
+            android:text="Ghi chú *: Mức đóng dành cho người lao động: BHXH 8%, BHYT 1.5%, BHTN 1%, tổng 10.5%"
             android:textColor="@color/black"
             android:textSize="15dp" />
 

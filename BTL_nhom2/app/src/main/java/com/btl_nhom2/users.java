@@ -3,18 +3,18 @@ package com.btl_nhom2;
 import java.io.Serializable;
 
 public class users implements Serializable {
-    private int maBHXH;
-    private String tenuser;
-    private String ngaysinh;
-    private Boolean gioitinh;
-    private int soCMND;
-    private String SDT;
-    private String diachi;
-    private int mucluong;
+    protected int maBHXH;
+    protected String tenuser;
+    protected String ngaysinh;
+    protected int gioitinh;
+    protected int soCMND;
+    protected String SDT;
+    protected String diachi;
+    protected int mucluong;
 
     public users(){}
 
-    public users(int maBHXH, String tenuser, String ngaysinh, Boolean gioitinh, int soCMND, String SDT, String diachi, int mucluong) {
+    public users(int maBHXH, String tenuser, String ngaysinh, int gioitinh, int soCMND, String SDT, String diachi, int mucluong) {
         this.maBHXH = maBHXH;
         this.tenuser = tenuser;
         this.ngaysinh = ngaysinh;
@@ -49,11 +49,11 @@ public class users implements Serializable {
         this.ngaysinh = ngaysinh;
     }
 
-    public Boolean getGioitinh() {
+    public int getGioitinh() {
         return gioitinh;
     }
 
-    public void setGioitinh(Boolean gioitinh) {
+    public void setGioitinh(int gioitinh) {
         this.gioitinh = gioitinh;
     }
 

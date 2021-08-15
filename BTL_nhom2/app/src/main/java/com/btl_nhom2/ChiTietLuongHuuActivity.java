@@ -37,7 +37,7 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
         txtHoTen.setText(u.getTenuser());
         txtMaBHXH.setText(u.getMaBHXH()+"");
         txtNgaySinh.setText(u.getNgaysinh());
-        if(u.getGioitinh()){
+        if(u.getGioitinh()==1){
             txtGioiTinh.setText("Nam");
         }else {
             txtGioiTinh.setText("Nữ");

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BTL_nhom2">
-        <activity android:name=".ChiTietLuongHuuActivity"></activity>
+        <activity android:name=".DangKyActivity"></activity>
+        <activity android:name=".ChiTietLuongHuuActivity" />
         <activity android:name=".ChiTietChiTraActivity" />
         <activity android:name=".ChiTietMucDongActivity" />
 

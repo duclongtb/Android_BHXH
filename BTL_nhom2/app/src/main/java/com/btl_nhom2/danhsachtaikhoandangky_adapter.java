@@ -42,7 +42,6 @@ public class danhsachtaikhoandangky_adapter extends ArrayAdapter {
             txtMaBHXH.setText(us.getMaBHXH()+"");
             txtHoTen.setText(us.getTenuser());
             txtXemChiTiet.setText("Xem");
-
         }
         return convertView;
     }

@@ -36,7 +36,7 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
         int ViTri = bundle.getInt("GioiTinh");
         users u = usersArrayList.get(ViTri);
 
-        if(u.getGioitinh()){
+        if(u.getGioitinh()==1){
             imgGioiTinh.setImageResource(R.drawable.boyicon);
         }else {
             imgGioiTinh.setImageResource(R.drawable.wonmanicon);
