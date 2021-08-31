@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,13 +18,14 @@ import java.util.ArrayList;
 
 public class QuanLyLuongHuuActivity extends AppCompatActivity {
 
-    ImageButton imgBack, imgSearch;
+    ImageButton imgBack;
     EditText editSearch;
     ListView listView;
     Spinner spnQLLuongHuu;
     String arr_[]={"Tất cả",
             "Đã nghỉ hưu",
             "Chưa nghỉ hưu"};
+    String name = "";
     ArrayList<users> usersArrayList = new ArrayList<users>();
     ArrayList<users> listTmp =new ArrayList<users>();
     danhsachtaikhoandangky_adapter adapter1;
@@ -35,7 +38,6 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
         db =DBhelper.getInstance(this);
 
         imgBack = findViewById(R.id.imgBack);
-        imgSearch = findViewById(R.id.imgSearch);
         editSearch = findViewById(R.id.editTxtSearch);
         listView = findViewById(R.id.lvLuongHuu);
         spnQLLuongHuu = findViewById(R.id.spnLuongHuu);
@@ -128,5 +130,62 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
                 QuanLyLuongHuuActivity.this.finish();
             }
         });
+
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String s = editSearch.getText().toString();
+                if(s.length()==0){
+                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                            QuanLyLuongHuuActivity.this,
+                            R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                            usersArrayList);
+                    listView.setAdapter(adapter1);
+                    adapter1.notifyDataSetChanged();
+                }
+                if(s.length()>=2){
+                    timTheoTen();
+                }
+            }
+        });
+    }
+    private void timTheoTen() {
+        String s = editSearch.getText().toString();
+        s = s.toLowerCase();
+
+        //Kiểm tra và update lại listview
+        name = s;
+        tienHanhKiemTra();
+    }
+
+    private void tienHanhKiemTra(){
+        ArrayList<users> uss = db.getAllInfor();
+        ArrayList<users> uss_check = new ArrayList<users>();
+        if(name.length()>2){
+            for(users u : uss){
+                String nameUser = u.getTenuser().toLowerCase();
+                if(nameUser.indexOf(name)>=0){
+                    uss_check.add(u);
+                }
+            }
+        }else {
+            uss_check = new ArrayList<>();
+        }
+        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                QuanLyLuongHuuActivity.this,
+                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                uss_check);
+        listView.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
     }
 }

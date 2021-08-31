@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -15,13 +17,15 @@ import java.util.ArrayList;
 
 public class QuanLyMucDongActivity extends AppCompatActivity {
 
-    ImageButton imgBtnBack, imgBtnSearch;
+    ImageButton imgBtnBack;
     EditText editTxtSearch;
     TextView txtXemChiTiet;
     ListView listView;
     ArrayList<users> usersArrayList = new ArrayList<users>();
     ArrayList<users> listTmp =new ArrayList<users>();
     danhsachtaikhoandangky_adapter adapter;
+
+    String name = "";
 
     ArrayList<user_detail> usersDetailArrayList = new ArrayList<user_detail>();
     ArrayList<user_detail> listTmp1 =new ArrayList<user_detail>();
@@ -34,7 +38,6 @@ public class QuanLyMucDongActivity extends AppCompatActivity {
         db =DBhelper.getInstance(this);
 
         imgBtnBack = findViewById(R.id.imgBack);
-        imgBtnSearch = findViewById(R.id.imgSearch);
         editTxtSearch = findViewById(R.id.editTxtSearch);
         txtXemChiTiet = findViewById(R.id.txtXemChiTiet);
         listView = findViewById(R.id.lvTaiKhoan);
@@ -87,16 +90,64 @@ public class QuanLyMucDongActivity extends AppCompatActivity {
                 QuanLyMucDongActivity.this.finish();
             }
         });
-        
-        imgBtnSearch.setOnClickListener(new View.OnClickListener() {
+
+        editTxtSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                timTheoTen();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String s = editTxtSearch.getText().toString();
+                if(s.length()==0){
+                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                            QuanLyMucDongActivity.this,
+                            R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                            usersArrayList);
+                    listView.setAdapter(adapter1);
+                    adapter1.notifyDataSetChanged();
+                }
+                if(s.length()>=2){
+                    timTheoTen();
+                }
             }
         });
 
     }
 
     private void timTheoTen() {
+        String s = editTxtSearch.getText().toString();
+        s = s.toLowerCase();
+
+        //Kiểm tra và update lại listview
+        name = s;
+        tienHanhKiemTra();
+    }
+
+    private void tienHanhKiemTra(){
+        ArrayList<users> uss = db.getAllInfor();
+        ArrayList<users> uss_check = new ArrayList<users>();
+        if(name.length()>2){
+            for(users u : uss){
+                String nameUser = u.getTenuser().toLowerCase();
+                if(nameUser.indexOf(name)>=0){
+                    uss_check.add(u);
+                }
+            }
+        }else {
+            uss_check = new ArrayList<>();
+        }
+        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                QuanLyMucDongActivity.this,
+                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                uss_check);
+        listView.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
     }
 }

@@ -52,7 +52,9 @@ public class DBhelper extends SQLiteOpenHelper {
                     DEN_THANG + " TEXT NOT NULL," +
                     TT_MUCDONG + " TEXT NOT NULL," +
                     TIEN_BHXH + " TEXT NOT NULL," +
-                    MA_BHXH + " INTEGER NOT NULL PRIMARY KEY" + ")";
+                    MA_BHXH + " INTEGER NOT NULL,"
+                    +"PRIMARY KEY (" + MA_BHXH + "," + TU_THANG + "," + DEN_THANG + ")"
+                    +")";
 //                    "FOREIGN KEY(" + TT_MUCDONG + ") REFERENCES " + TABLE_USER + "(" + MA_BHXH + "))" ;
 //                    TT_CHITRA + " INTEGER NOT NULL," +
 //                    TT_NGHIHUU + " TEXT NOT NULL," +
@@ -347,6 +349,19 @@ public class DBhelper extends SQLiteOpenHelper {
             cursor.close();
         }
         return lists;
+    }
+
+    public int updateUserDetail(user_detail user_detail, String id, String tuthang, String denthang){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TU_THANG, user_detail.getTuthang());
+        values.put(DEN_THANG,user_detail.getDenthang());
+        values.put(TT_MUCDONG, user_detail.getTinhtrangmucdong());
+        values.put(TIEN_BHXH, user_detail.getTienBHXH());
+        values.put(MA_BHXH,user_detail.getMaBHXH());
+        int rowEff = db.update(TABLE_USER_DETAIL, values, MA_BHXH + "=? and "+TU_THANG+"=? and "+DEN_THANG+"=?",new String[]{id,tuthang,denthang} );
+        db.close();
+        return rowEff;
     }
 
     public Boolean insertData(String tentk, String matkhau){

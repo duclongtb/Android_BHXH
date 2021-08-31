@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ChiTietLuongHuuActivity extends AppCompatActivity {
 
-    TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtDiaChi, txtTinhTrang, txtThoiGianNghiHuu;
+    TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtDiaChi, txtTinhTrang, txtThoiGianNghiHuu, txtLuongHuu;
     ImageButton imgback;
     DBhelper db;
     ArrayList<users> usersArrayList = new ArrayList<>();
@@ -53,6 +53,9 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
             txtThoiGianNghiHuu.setText("---Chưa nghỉ hưu---");
         }
 
+        int luongHuu = (int) ( u.getMucluong()*0.45);
+        txtLuongHuu.setText(luongHuu+"");
+
         imgback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,5 +73,6 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
         txtDiaChi = findViewById(R.id.txtDiaChi);
         txtTinhTrang = findViewById(R.id.txtTinhTrang);
         txtThoiGianNghiHuu = findViewById(R.id.txtThoiGianNghiHuu);
+        txtLuongHuu = findViewById(R.id.txtLuongHuu);
     }
 }

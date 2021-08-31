@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,12 +25,14 @@ import java.util.List;
 
 public class QuanLyTaiKhoanActivity extends AppCompatActivity {
 
-    ImageButton imgBtnBack, imgBtnSearch;
+    ImageButton imgBtnBack;
     EditText editTxtSearch;
     ListView listView;
     ArrayList<users> usersArrayList = new ArrayList<users>();
     ArrayList<users> listTmp =new ArrayList<users>();
     danhsachtaikhoandangky_adapter adapter;
+
+    String name = "";
 
     DBhelper db = null;
     @Override
@@ -44,7 +48,6 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
             db.insertInfor(new users(123453, "Nguyen Thao Tam", "23/07/1955", 0, 1001004, "01241443", "Bắc Ninh", 9000000,"Chưa trả","Đã nghỉ hưu"));
         }
         imgBtnBack = findViewById(R.id.imgBack);
-        imgBtnSearch = findViewById(R.id.imgSearch);
         editTxtSearch = findViewById(R.id.editTxtSearch);
         listView = findViewById(R.id.lvTaiKhoan);
 
@@ -55,12 +58,6 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
             }
         });
 
-        imgBtnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timTheoTen();
-            }
-        });
         if(db!=null){
             listTmp = db.getAllInfor();
             usersArrayList.addAll(listTmp);
@@ -81,17 +78,63 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        editTxtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String s = editTxtSearch.getText().toString();
+                if(s.length()==0){
+                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                            QuanLyTaiKhoanActivity.this,
+                            R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                            usersArrayList);
+                    listView.setAdapter(adapter1);
+                    adapter1.notifyDataSetChanged();
+                }
+                if(s.length()>=2){
+                    timTheoTen();
+                }
+            }
+        });
     }
+
     private void timTheoTen() {
-//        if(db!=null){
-//            String tenuser = editTxtSearch.getText() + "";
-//            listTmp = db.getInforByID("tblUsers", "tenUser", tenuser);
-////            usersArrayList.get(listTmp);
-//            adapter = new danhsachtaikhoandangky_adapter(
-//                    QuanLyTaiKhoanActivity.this,
-//                    R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-//                    listTmp);
-//            listView.setAdapter(adapter);
-//        }
+        String s = editTxtSearch.getText().toString();
+        s = s.toLowerCase();
+
+        //Kiểm tra và update lại listview
+        name = s;
+        tienHanhKiemTra();
+    }
+
+    private void tienHanhKiemTra(){
+        ArrayList<users> uss = db.getAllInfor();
+        ArrayList<users> uss_check = new ArrayList<users>();
+        if(name.length()>2){
+            for(users u : uss){
+                String nameUser = u.getTenuser().toLowerCase();
+                if(nameUser.indexOf(name)>=0){
+                    uss_check.add(u);
+                }
+            }
+        }else {
+            uss_check = new ArrayList<>();
+        }
+        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                QuanLyTaiKhoanActivity.this,
+                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                uss_check);
+        listView.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
     }
 }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +17,14 @@ public class XinChaoActivity extends AppCompatActivity {
 
     ImageButton imgBtnQuanLyTaiKhoan, imgQuanLyMucDong, imgQuanLyChiTra, imgQuanLyLuongHuu;
     TextView txtQuanLyTaiKhoan, txtQuanLyMucDong, txtQuanLyChiTra, txtQuanLyLuongHuu,txtXinChaoTenAdmin;
+    ImageView menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xin_chao);
+
+        menu = (ImageView) findViewById(R.id.menu);
+        registerForContextMenu(menu);
 
         txtXinChaoTenAdmin = (TextView) findViewById(R.id.txtXinChaoTenAdmin);
 
@@ -48,6 +53,29 @@ public class XinChaoActivity extends AppCompatActivity {
 
         String txtAdmin = bundle.getString("admin");
         txtXinChaoTenAdmin.setText("Xin chào, " + txtAdmin);
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(XinChaoActivity.this);
+                builder.setMessage("Bạn muốn đăng xuất khỏi ứng dụng?");
+                builder.setCancelable(true);
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     private class MyEnvent implements View.OnClickListener{

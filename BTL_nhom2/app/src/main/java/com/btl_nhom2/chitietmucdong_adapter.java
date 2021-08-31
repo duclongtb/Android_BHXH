@@ -42,8 +42,8 @@ public class chitietmucdong_adapter extends ArrayAdapter {
 
             txtTuThang.setText(us.getTuthang());
             txtDenThang.setText(us.getDenthang());
-            txtTinhTrang.setText("tình trạng");
-            txtTienBHXH.setText("Chưa tính");
+            txtTinhTrang.setText(us.getTinhtrangmucdong()+"");
+            txtTienBHXH.setText(us.getTienBHXH()+"");
         }
         return convertView;
     }

@@ -42,7 +42,7 @@ public class chitietchitra_adapter extends ArrayAdapter {
 
             txtTuThang.setText(us.getTuthang());
             txtDenThang.setText(us.getDenthang());
-            txtMucDongBHXH.setText("Chưa tính");
+            txtMucDongBHXH.setText(us.getTinhtrangmucdong());
         }
         return convertView;
     }
