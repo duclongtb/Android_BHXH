@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DBhelper extends SQLiteOpenHelper {
     private static final String TAG = "DBHelper";
@@ -25,6 +26,8 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String DIA_CHI = "diaChi";
     private static final String SDT = "sdt";
     private static final String MUC_LUONG = "mucLuong";
+    private static final String TT_CHITRA = "tinhTrangChiTra";
+    private static final String TT_NGHIHUU = "tinhTrangNghiHuu";
     private static final String CREATE_USER_TABLE_SQL =
             "CREATE TABLE IF NOT EXISTS " + TABLE_USER + " (" +
                     MA_BHXH + " INTEGER NOT NULL PRIMARY KEY ," +
@@ -32,13 +35,29 @@ public class DBhelper extends SQLiteOpenHelper {
                     NGAY_SINH + " TEXT NOT NULL," +
                     GIOI_TINH + " TEXT NOT NULL," +
                     SO_CMND + " INTEGER NOT NULL," +
-                    DIA_CHI + " TEXT NOT NULL," +
                     SDT + " TEXT NOT NULL," +
-                    MUC_LUONG + " INTEGER NOT NULL" +
+                    DIA_CHI + " TEXT NOT NULL," +
+                    MUC_LUONG + " INTEGER NOT NULL," +
+                    TT_CHITRA + " INTEGER NOT NULL," +
+                    TT_NGHIHUU + " TEXT NOT NULL" +
                     ")" ;
-    public DBhelper(Context context) {
-        super(context, DBNAME, null, DATABASE_VERSION);
-    }
+    protected static final String TABLE_USER_DETAIL = "tblUserDetails";
+    private static final String TU_THANG = "tuThang";
+    private static final String DEN_THANG = "denThang";
+    private static final String TIEN_BHXH = "tienBHXH";
+    private static final String TT_MUCDONG = "tinhTrangMucDong";
+    private static final String CREATE_USER_DETAIL_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_USER_DETAIL + " (" +
+                    TU_THANG + " TEXT NOT NULL," +
+                    DEN_THANG + " TEXT NOT NULL," +
+                    TT_MUCDONG + " TEXT NOT NULL," +
+                    TIEN_BHXH + " TEXT NOT NULL," +
+                    MA_BHXH + " INTEGER NOT NULL PRIMARY KEY" + ")";
+//                    "FOREIGN KEY(" + TT_MUCDONG + ") REFERENCES " + TABLE_USER + "(" + MA_BHXH + "))" ;
+//                    TT_CHITRA + " INTEGER NOT NULL," +
+//                    TT_NGHIHUU + " TEXT NOT NULL," +
+//                    MA_BHXH + " INTEGER NOT NULL PRIMARY KEY " +
+//                    ")" ;
     private static DBhelper sInstance;
     public static DBhelper getInstance(Context context) {
         if (sInstance == null) {
@@ -46,17 +65,19 @@ public class DBhelper extends SQLiteOpenHelper {
         }
         return sInstance;
     }
+    public DBhelper(Context context) {
+        super(context, DBNAME, null, DATABASE_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
-        Log.e(TAG, "onCreate: ");
+        Log.e(TAG, "Create CSDL: ");
         try {
+            MyDB.setLocale(Locale.getDefault());
+            MyDB.setVersion(1);
             MyDB.execSQL("create Table TAIKHOAN(tentk TEXT primary key, matkhau TEXT)");
             MyDB.execSQL(CREATE_USER_TABLE_SQL);
-            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123450, 'Nguyen Van Duc', '23/07/1950', 1, 1001001, '01241440', 'Hà nội', 8000000)");
-            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123451, 'Nguyen Thanh Thao', '23/07/1980', 0, 1001002, '01241441', 'Hà nam', 8000000)");
-            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123452, 'Nguyen Duc Nam', '23/07/1975', 1, 1001003, '01241442', 'Nam định', 8000000)");
-            MyDB.execSQL("INSERT INTO " + TABLE_USER + "(MA_BHXH, TEN_USER, NGAY_SINH, GIOI_TINH, SO_CMND, DIA_CHI, SDT, MUC_LUONG) VALUES (123453, 'Nguyen Thao Tam', '23/07/1955', 0, 1001004, '01241443', 'Bắc Ninh', 8000000)");
+            MyDB.execSQL(CREATE_USER_DETAIL_TABLE);
         }
         catch (Exception e){
             Log.e(TAG, e.toString());
@@ -65,30 +86,12 @@ public class DBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase MyDB, int i, int i1) {
-        Log.e(TAG, "onUpgrade: ");
+        Log.e(TAG, "Update CSDL: ");
 //        MyDB.execSQL("drop Table if exists TAIKHOAN");
         MyDB.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        MyDB.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_DETAIL);
         onCreate(MyDB);
     }
-
-//    public long insertInfor(String table_name, ContentValues values) {
-//        SQLiteDatabase db = getWritableDatabase();
-//        ArrayList<defaultCSDL> lists = new ArrayList<defaultCSDL>();
-//        ContentValues ct = new ContentValues();
-//        ct.put("maBhxh", u0.maBhxh);
-//        ct.put("tenUser", u0.tenuser);
-//        ct.put("ngaySinh", u0.ngaysinh);
-//        ct.put("gioiTinh", u0.gioitinh);
-//        ct.put("soCmnd", u0.soCMND);
-//        ct.put("SDT", u0.SDT);
-//        ct.put("diaChi", u0.diachi);
-//        ct.put("mucLuong", u0.mucluong);
-//        db.insert(DBhelper.TABLE_USER, null, ct);
-//        return lists;
-//        long rowId = db.insert(table_name, null, values);
-//        db.close();
-//        return rowId;
-//    }
 
     public boolean isTableExists(SQLiteDatabase MyDB,String tableName)
     {
@@ -106,10 +109,99 @@ public class DBhelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public ArrayList<users> getAllInfor(String TABLE_NAME) {
+    public boolean insertInfor(users users){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MA_BHXH, users.getMaBHXH());
+        values.put(TEN_USER, users.getTenuser());
+        values.put(NGAY_SINH, users.getNgaysinh());
+        values.put(GIOI_TINH, users.getGioitinh());
+        values.put(SO_CMND, users.getSoCMND());
+        values.put(SDT, users.getSDT());
+        values.put(DIA_CHI, users.getDiachi());
+        values.put(MUC_LUONG, users.getMucluong());
+        values.put(TT_CHITRA, users.getTinhtrangchitra());
+        values.put(TT_NGHIHUU, users.getTinhtrangnghihuu());
+        long rowId = db.insert(TABLE_USER, null, values);
+        db.close();
+        if(rowId != -1)
+            return true;
+        return false;
+    }
+    public boolean insertInforDetail(user_detail user_detail){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TU_THANG, user_detail.getTuthang());
+        values.put(DEN_THANG, user_detail.getDenthang());
+        values.put(TT_MUCDONG, user_detail.getTinhtrangmucdong());
+        values.put(TIEN_BHXH, user_detail.getTienBHXH());
+//        values.put(TT_CHITRA, user_detail.getTinhtrangchitra());
+//        values.put(TT_NGHIHUU, user_detail.getTinhtrangnghihuu());
+        values.put(MA_BHXH, user_detail.getMaBHXH());
+        long rowId = db.insert(TABLE_USER_DETAIL, null, values);
+        db.close();
+        if(rowId != -1)
+            return true;
+        return false;
+    }
+
+    public int getTotal(){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM "+ TABLE_USER;
+        Cursor cursor = db.rawQuery(sql,null);
+        int totalRows = cursor.getCount();
+        cursor.close();
+        return totalRows;
+    }
+
+    public int getTotalMD(){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT a." + MA_BHXH + ", a." + TEN_USER + ", b." + TU_THANG + ", b." + DEN_THANG + ", a." + MUC_LUONG +
+                ", b." + TT_MUCDONG + " FROM " +  TABLE_USER + " a LEFT JOIN " + TABLE_USER_DETAIL +
+                " b ON a." + MA_BHXH + " = b." + MA_BHXH;
+        Cursor cursor = db.rawQuery(sql,null);
+        int totalRows = cursor.getCount();
+        cursor.close();
+        return totalRows;
+    }
+
+    public int getTotalDetail(){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT b."+ TU_THANG + ", b." + DEN_THANG + ", b." + TT_MUCDONG +
+                ", b." + TIEN_BHXH + ", a." + MA_BHXH +  " FROM " +  TABLE_USER_DETAIL + " b LEFT JOIN " + TABLE_USER +
+                " a ON a." + MA_BHXH + " = b." + MA_BHXH;
+        Cursor cursor = db.rawQuery(sql,null);
+        int totalRows = cursor.getCount();
+        cursor.close();
+        return totalRows;
+    }
+    public ArrayList<user_detail> getAllInforDetail() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<user_detail> listsdetail = new ArrayList<user_detail>();
+        String sql = "SELECT b."+ TU_THANG + ", b." + DEN_THANG + ", b." + TT_MUCDONG +
+                ", b." + TIEN_BHXH + ", a." + MA_BHXH +  " FROM " +  TABLE_USER + " a LEFT JOIN " + TABLE_USER_DETAIL +
+                " b ON a." + MA_BHXH + " = b." + MA_BHXH;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                listsdetail.add(new user_detail(cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4)
+                ));
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return listsdetail;
+    }
+
+    public ArrayList<users> getAllInfor() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<users> lists = new ArrayList<users>();
-        String sql = "SELECT * FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + TABLE_USER;
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -120,11 +212,140 @@ public class DBhelper extends SQLiteOpenHelper {
                         cursor.getInt(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getInt(7)));
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9)
+                        ));
+
             } while (cursor.moveToNext());
             cursor.close();
         }
         db.close();
+        return lists;
+    }
+    public ArrayList<users> getAllInforLuongHuu1() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<users> lists = new ArrayList<users>();
+        String sql = "SELECT * FROM " + TABLE_USER + " WHERE " + TT_NGHIHUU + " = 'Đã nghỉ hưu'";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lists.add(new users(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9)
+                ));
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return lists;
+    }
+    public ArrayList<users> getAllInforLuongHuu2() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<users> lists = new ArrayList<users>();
+        String sql = "SELECT * FROM " + TABLE_USER + " WHERE " + TT_NGHIHUU + " = 'Chưa nghỉ hưu'";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lists.add(new users(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9)
+                ));
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return lists;
+    }
+    public ArrayList<users> getAllInforChiTra1() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<users> lists = new ArrayList<users>();
+        String sql = "SELECT * FROM " + TABLE_USER + " WHERE " + TT_CHITRA + " = 'Đã trả'";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lists.add(new users(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9)
+                ));
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return lists;
+    }
+    public ArrayList<users> getAllInforChiTra2() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<users> lists = new ArrayList<users>();
+        String sql = "SELECT * FROM " + TABLE_USER + " WHERE " + TT_CHITRA + " = 'Chưa trả'";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lists.add(new users(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9)
+                ));
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return lists;
+    }
+
+    public ArrayList<users> getInforByID(String tableName, String fieldName, String id)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<users> lists = new ArrayList<users>();
+        Cursor cursor = db.query(tableName, null, fieldName+"=?",
+                new String[]{id}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lists.add(new users(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9)
+                ));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
         return lists;
     }
 
@@ -138,33 +359,6 @@ public class DBhelper extends SQLiteOpenHelper {
         else
             return true;
     }
-
-//    public ArrayList<users> initUser(String TABLE_USER){
-//        SQLiteDatabase MyDB = this.getWritableDatabase();
-//        ArrayList<users> lists = new ArrayList<users>();
-//        users u0 = new users(123450, "Nguyen Van A", "23/07/1950", 1, 1001001, "01241440", "Ha noi", 8000000);
-//        users u1 = new users(123450, "Nguyen Van B", "23/07/1955", 0, 1001002, "01241441", "Ha nam", 7000000);
-//        ContentValues ct = new ContentValues();
-//        ct.put("maBhxh", u0.maBHXH);
-//        ct.put("tenUser", u0.tenuser);
-//        ct.put("ngaySinh", u0.ngaysinh);
-//        ct.put("gioiTinh", u0.gioitinh);
-//        ct.put("soCmnd", u0.soCMND);
-//        ct.put("SDT", u0.SDT);
-//        ct.put("diaChi", u0.diachi);
-//        ct.put("mucLuong", u0.mucluong);
-//
-//        ct.put("maBhxh", u1.maBHXH);
-//        ct.put("tenUser", u1.tenuser);
-//        ct.put("ngaySinh", u1.ngaysinh);
-//        ct.put("gioiTinh", u1.gioitinh);
-//        ct.put("soCmnd", u1.soCMND);
-//        ct.put("SDT", u1.SDT);
-//        ct.put("diaChi", u1.diachi);
-//        ct.put("mucLuong", u1.mucluong);
-//        MyDB.insert(DBhelper.TABLE_USER, null, ct);
-//        return lists;
-//    }
 
     public Boolean checktentk(String tentk) {
         SQLiteDatabase MyDB = this.getWritableDatabase();

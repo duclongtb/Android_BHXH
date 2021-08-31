@@ -23,15 +23,18 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
     Spinner spnQLChiTra;
     TextView txtDieuKienChiTra;
     String arr[]={"Tất cả",
-            "Chưa trả",
-            "Đã trả"};
+            "Đã trả",
+            "Chưa trả"};
+    ArrayList<users> usersArrayList = new ArrayList<users>();
+    ArrayList<users> listTmp =new ArrayList<users>();
+    danhsachtaikhoandangky_adapter adapter1;
+
+    DBhelper db = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_chi_tra_1_lan);
-
-        //fakeCSDL
-        fakeCSDL fake = new fakeCSDL();
+        db =DBhelper.getInstance(this);
 
         imgBack = findViewById(R.id.imgBack);
         imgSearch = findViewById(R.id.imgSearch);
@@ -43,25 +46,72 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,arr);
+        // hiển thị danh sách spn
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        // thiết lập adapter cho spn
         spnQLChiTra.setAdapter(adapter);
-
+        String itemspn = spnQLChiTra.getSelectedItem().toString();
+        // when click spn
         spnQLChiTra.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                String itemspn = spnQLChiTra.getSelectedItem().toString();
+                if(itemspn == "Đã trả"){
+                    usersArrayList.clear();
+                    if(db!=null){
+                        listTmp = db.getAllInforChiTra1();
+                        usersArrayList.addAll(listTmp);
+                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                                QuanLyChiTra1LanActivity.this,
+                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                                usersArrayList);
+                        listView.setAdapter(adapter1);
+                        adapter1.notifyDataSetChanged();
+                    }
+                }
+                if(itemspn == "Chưa trả"){
+                    usersArrayList.clear();
+                    if(db!=null){
+                        listTmp = db.getAllInforChiTra2();
+                        usersArrayList.addAll(listTmp);
+                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                                QuanLyChiTra1LanActivity.this,
+                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                                usersArrayList);
+                        listView.setAdapter(adapter1);
+                        adapter1.notifyDataSetChanged();
+                    }
+                }
+                if(itemspn == "Tất cả"){
+                    usersArrayList.clear();
+                        if(db!=null){
+                            listTmp = db.getAllInfor();
+                            usersArrayList.addAll(listTmp);
+                            danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                                    QuanLyChiTra1LanActivity.this,
+                                    R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                                    usersArrayList);
+                            listView.setAdapter(adapter1);
+                            adapter1.notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                usersArrayList.clear();
+                if(db!=null){
+                    listTmp = db.getAllInfor();
+                    usersArrayList.addAll(listTmp);
+                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                            QuanLyChiTra1LanActivity.this,
+                            R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                            usersArrayList);
+                    listView.setAdapter(adapter1);
+                    adapter1.notifyDataSetChanged();
+                }
             }
         });
-
-        danhsachtaikhoandangky_adapter adapter1 = new danhsachtaikhoandangky_adapter(this,
-                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                fake.fakeusers());
-        listView.setAdapter(adapter1);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

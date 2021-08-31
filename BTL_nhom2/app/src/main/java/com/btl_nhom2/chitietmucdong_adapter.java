@@ -33,20 +33,17 @@ public class chitietmucdong_adapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(resource, null);
         if(myArray.size()>0 && position>=0){
-            final TextView txtTuThang, txtDenThang, txtTienBHXH, txtTienBHYT, txtTienBHTN;
+            final TextView txtTuThang, txtDenThang, txtTienBHXH, txtTinhTrang;
             txtTuThang = convertView.findViewById(R.id.txtTuThang);
             txtDenThang = convertView.findViewById(R.id.txtDenThang);
-            txtTienBHTN = convertView.findViewById(R.id.txtTienBHTN);
+            txtTinhTrang = convertView.findViewById(R.id.txtTinhTrang);
             txtTienBHXH = convertView.findViewById(R.id.txtTienBHXH);
-            txtTienBHYT = convertView.findViewById(R.id.txtTienBHYT);
-
             final user_detail us = myArray.get(position);
 
             txtTuThang.setText(us.getTuthang());
             txtDenThang.setText(us.getDenthang());
+            txtTinhTrang.setText("tình trạng");
             txtTienBHXH.setText("Chưa tính");
-            txtTienBHYT.setText("Chưa tính");
-            txtTienBHTN.setText("Chưa tính");
         }
         return convertView;
     }

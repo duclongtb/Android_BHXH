@@ -5,10 +5,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="1"
         android:orientation="horizontal">
         <TextView
             android:layout_marginLeft="3dp"
             android:layout_marginRight="1dp"
+            android:layout_weight="0.25"
             android:id="@+id/txtTuThang"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
@@ -21,6 +23,7 @@
             android:layout_marginRight="1dp"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.25"
             android:text="Đến tháng"
             android:background="@color/white"
             android:textColor="@color/black"
@@ -30,25 +33,18 @@
             android:layout_marginRight="1dp"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.25"
             android:text="Tiền BHXH"
             android:background="@color/white"
             android:textColor="@color/black"
             android:textSize="13dp"/>
         <TextView
-            android:id="@+id/txtTienBHYT"
+            android:id="@+id/txtTinhTrang"
             android:layout_marginRight="1dp"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="Tiền BHYT"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:textSize="13dp"/>
-        <TextView
-            android:id="@+id/txtTienBHTN"
-            android:layout_marginRight="1dp"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="Tiền BHTN"
+            android:layout_weight="0.25"
+            android:text="Tình trạng"
             android:background="@color/white"
             android:textColor="@color/black"
             android:textSize="13dp"/>

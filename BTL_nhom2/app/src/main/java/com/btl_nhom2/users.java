@@ -11,10 +11,12 @@ public class users implements Serializable {
     protected String SDT;
     protected String diachi;
     protected int mucluong;
+    protected String tinhtrangchitra;
+    protected String tinhtrangnghihuu;
 
     public users(){}
 
-    public users(int maBHXH, String tenuser, String ngaysinh, int gioitinh, int soCMND, String SDT, String diachi, int mucluong) {
+    public users(int maBHXH, String tenuser, String ngaysinh, int gioitinh, int soCMND, String SDT, String diachi, int mucluong, String tinhtrangchitra, String tinhtrangnghihuu) {
         this.maBHXH = maBHXH;
         this.tenuser = tenuser;
         this.ngaysinh = ngaysinh;
@@ -23,6 +25,8 @@ public class users implements Serializable {
         this.SDT = SDT;
         this.diachi = diachi;
         this.mucluong = mucluong;
+        this.tinhtrangchitra = tinhtrangchitra;
+        this.tinhtrangnghihuu = tinhtrangnghihuu;
     }
 
     public int getMaBHXH() {
@@ -87,6 +91,22 @@ public class users implements Serializable {
 
     public void setMucluong(int mucluong) {
         this.mucluong = mucluong;
+    }
+
+        public String getTinhtrangchitra() {
+        return tinhtrangchitra;
+    }
+
+    public void setTinhtrangchitra(String tinhtrangchitra) {
+        this.tinhtrangchitra = tinhtrangchitra;
+    }
+
+    public String getTinhtrangnghihuu() {
+        return tinhtrangnghihuu;
+    }
+
+    public void setTinhtrangnghihuu(String tinhtrangnghihuu) {
+        this.tinhtrangnghihuu = tinhtrangnghihuu;
     }
 
 }

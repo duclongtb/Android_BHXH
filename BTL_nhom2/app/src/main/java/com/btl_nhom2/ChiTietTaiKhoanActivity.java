@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,20 +15,20 @@ import java.util.ArrayList;
 public class ChiTietTaiKhoanActivity extends AppCompatActivity {
 
     ImageButton imgBack, imgChiTietLuongHuu, imgChiTietChiTra, imgChiTietMucDong;
-    TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtCMND, txtSDT, txtDiaChi, txtChiTietLuongHuu, txtChiTietChiTra, txtChiTietMucDong;
+    TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtCMND, txtSDT, txtDiaChi, txtChiTietLuongHuu, txtChiTietChiTra, txtChiTietMucDong;
     ImageView imgGioiTinh;
-
+    DBhelper db;
     ArrayList<users> usersArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
-
+        db =DBhelper.getInstance(this);
         //fakeCSDL
-        fakeCSDL fake = new fakeCSDL();
-        usersArrayList= fake.fakeusers();
-
+//        fakeCSDL fake = new fakeCSDL();
+//        usersArrayList= fake.fakeusers();
+        usersArrayList = db.getAllInfor();
         getWidget();
 
         //setText
@@ -38,6 +39,7 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
 
         if(u.getGioitinh()==1){
             imgGioiTinh.setImageResource(R.drawable.boyicon);
+
         }else {
             imgGioiTinh.setImageResource(R.drawable.wonmanicon);
         }
@@ -48,6 +50,13 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
         txtCMND.setText(u.getSoCMND()+"");
         txtSDT.setText(u.getSDT());
         txtDiaChi.setText(u.getDiachi());
+        if(u.getGioitinh()==1){
+            txtGioiTinh.setText("nam");
+        }else  {
+            txtGioiTinh.setText("nữ");
+        }
+
+
 
 
 
@@ -72,6 +81,7 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
         imgChiTietChiTra = findViewById(R.id.imgBtnChiTietChiTra);
         imgChiTietLuongHuu = findViewById(R.id.imgBtnChiTietLuongHuu);
         imgChiTietMucDong = findViewById(R.id.imgBtnChiTietMucDong);
+        txtGioiTinh = findViewById(R.id.txtGioiTinh);
         imgGioiTinh = findViewById(R.id.imgGioiTinh);
         txtHoTen = findViewById(R.id.txtHoTen);
         txtMaBHXH = findViewById(R.id.txtMaBHXH);

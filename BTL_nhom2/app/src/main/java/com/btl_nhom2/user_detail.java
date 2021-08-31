@@ -4,22 +4,32 @@ import java.io.Serializable;
 
 public class user_detail  implements Serializable {
 
-    private int maBHXH;
-    private String tuthang;
-    private String denthang;
-    private String tinhtrangmucdong;
-    private String tinhtrangchitra;
-    private String tinhtrangnghihuu;
+    protected String tuthang;
+    protected String denthang;
+    protected String tinhtrangmucdong;
+    protected int tienBHXH;
+//    protected String tinhtrangchitra;
+//    protected String tinhtrangnghihuu;
+    protected int maBHXH;
 
     public user_detail() {}
 
-    public user_detail(int maBHXH, String tuthang, String denthang, String tinhtrangmucdong, String tinhtrangchitra, String tinhtrangnghihuu) {
-        this.maBHXH = maBHXH;
+    public user_detail(String tuthang, String denthang, String tinhtrangmucdong,int tienBHXH, int maBHXH) {
         this.tuthang = tuthang;
         this.denthang = denthang;
         this.tinhtrangmucdong = tinhtrangmucdong;
-        this.tinhtrangchitra = tinhtrangchitra;
-        this.tinhtrangnghihuu = tinhtrangnghihuu;
+        this.tienBHXH = tienBHXH;
+//        this.tinhtrangchitra = tinhtrangchitra;
+//        this.tinhtrangnghihuu = tinhtrangnghihuu;
+        this.maBHXH = maBHXH;
+    }
+
+    public int getTienBHXH() {
+        return tienBHXH;
+    }
+
+    public void setTienBHXH(int tienBHXH) {
+        this.tienBHXH = tienBHXH;
     }
 
     public int getMaBHXH() {
@@ -54,19 +64,19 @@ public class user_detail  implements Serializable {
         this.tinhtrangmucdong = tinhtrangmucdong;
     }
 
-    public String getTinhtrangchitra() {
-        return tinhtrangchitra;
-    }
-
-    public void setTinhtrangchitra(String tinhtrangchitra) {
-        this.tinhtrangchitra = tinhtrangchitra;
-    }
-
-    public String getTinhtrangnghihuu() {
-        return tinhtrangnghihuu;
-    }
-
-    public void setTinhtrangnghihuu(String tinhtrangnghihuu) {
-        this.tinhtrangnghihuu = tinhtrangnghihuu;
-    }
+//    public String getTinhtrangchitra() {
+//        return tinhtrangchitra;
+//    }
+//
+//    public void setTinhtrangchitra(String tinhtrangchitra) {
+//        this.tinhtrangchitra = tinhtrangchitra;
+//    }
+//
+//    public String getTinhtrangnghihuu() {
+//        return tinhtrangnghihuu;
+//    }
+//
+//    public void setTinhtrangnghihuu(String tinhtrangnghihuu) {
+//        this.tinhtrangnghihuu = tinhtrangnghihuu;
+//    }
 }

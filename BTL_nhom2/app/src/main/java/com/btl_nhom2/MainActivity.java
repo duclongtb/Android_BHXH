@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangKy = (Button) findViewById(R.id.btnDangKy);
         DB = new DBhelper(this);
-        DB = DBhelper.getInstance(this);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,8 +64,13 @@ public class MainActivity extends AppCompatActivity {
                     Boolean checkuserpass = DB.checktentkmatkhau(user, pass);
                     if(checkuserpass==true){
                         Toast.makeText(MainActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        Intent intent  = new Intent(getApplicationContext(), XinChaoActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), XinChaoActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("admin", user);
+                        intent.putExtra("ADMIN",bundle);
                         startActivity(intent);
+                        editTenTk.setText("");
+                        editMatKhau.setText("");
                     }else{
                         Toast.makeText(MainActivity.this, "Vui lòng kiểm tra lại thông tin", Toast.LENGTH_SHORT).show();
                     }

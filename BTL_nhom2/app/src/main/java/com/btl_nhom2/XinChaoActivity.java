@@ -2,6 +2,9 @@ package com.btl_nhom2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +15,13 @@ import android.widget.Toast;
 public class XinChaoActivity extends AppCompatActivity {
 
     ImageButton imgBtnQuanLyTaiKhoan, imgQuanLyMucDong, imgQuanLyChiTra, imgQuanLyLuongHuu;
-    TextView txtQuanLyTaiKhoan, txtQuanLyMucDong, txtQuanLyChiTra, txtQuanLyLuongHuu;
+    TextView txtQuanLyTaiKhoan, txtQuanLyMucDong, txtQuanLyChiTra, txtQuanLyLuongHuu,txtXinChaoTenAdmin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xin_chao);
+
+        txtXinChaoTenAdmin = (TextView) findViewById(R.id.txtXinChaoTenAdmin);
 
         imgBtnQuanLyTaiKhoan =(ImageButton) findViewById(R.id.imgBtnQuanLyTaiKhoan);
         imgQuanLyMucDong = (ImageButton) findViewById(R.id.imgBtnQuanLyMucDong);
@@ -37,6 +42,12 @@ public class XinChaoActivity extends AppCompatActivity {
         txtQuanLyMucDong.setOnClickListener(new MyEnvent());
         txtQuanLyChiTra.setOnClickListener(new MyEnvent());
         txtQuanLyLuongHuu.setOnClickListener(new MyEnvent());
+
+        Intent callerIntent = getIntent();
+        Bundle bundle = callerIntent.getBundleExtra("ADMIN");
+
+        String txtAdmin = bundle.getString("admin");
+        txtXinChaoTenAdmin.setText("Xin chào, " + txtAdmin);
     }
 
     private class MyEnvent implements View.OnClickListener{
@@ -73,5 +84,26 @@ public class XinChaoActivity extends AppCompatActivity {
     private void quanLyChiTra() {
         Intent intent = new Intent(XinChaoActivity.this, QuanLyChiTra1LanActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(XinChaoActivity.this);
+        builder.setMessage("Bạn muốn đăng xuất khỏi ứng dụng?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
