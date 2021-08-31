@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:background="@color/black"
             android:gravity="center"
-            android:text="Chi tiết tài khoản"
+            android:text="Chi tiết chi trả"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"

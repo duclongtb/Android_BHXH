@@ -17,36 +17,48 @@ public class ChiTietChiTraActivity extends AppCompatActivity {
     TextView txtHoTen, txtMaBHXH, txtTinhTrang;
     ArrayList<user_detail> u_detail = null;
     ListView listView;
+    DBhelper db;
+    ArrayList<users> usersArrayList = new ArrayList<>();
+    ArrayList<user_detail> usersDetailArrayList = new ArrayList<user_detail>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_chi_tra);
-
+        db =DBhelper.getInstance(this);
+        usersArrayList = db.getAllInfor();
         getWidget();
 
+
         //fakeCSDL
-        fakeCSDL fake = new fakeCSDL();
-        u_detail = fake.fakeuser_detail();
+        //fakeCSDL fake = new fakeCSDL();
+        //u_detail = fake.fakeuser_detail();
+
+
 
         //setText
         Intent callerIntent = getIntent();
         Bundle bundle = callerIntent.getBundleExtra("VITRI");
         int ViTri = bundle.getInt("ViTri");
+        users u = usersArrayList.get(ViTri);
+//        users u_d = user.get(ViTri);
 
-        user_detail u = u_detail.get(ViTri);
+        txtHoTen.setText(u.getTenuser());
+        txtMaBHXH.setText(u.getMaBHXH()+"");
+        txtTinhTrang.setText(u.getTinhtrangchitra());
+
+        //user_detail user_detail = u_detail.get(ViTri);
         //txtTinhTrang.setText(u.getTinhtrangchitra());
 
-        ArrayList<user_detail> listtmp = new ArrayList<>();
-        for(int i=0;i<u_detail.size();i++){
-            if(u_detail.get(i).getMaBHXH()==u.getMaBHXH()){
-                listtmp.add(u_detail.get(i));
-            }
+        ArrayList<user_detail> listtmp = db.getAllInforDetail();
+        for (user_detail uss : listtmp) {
+            if(uss.getMaBHXH()==u.getMaBHXH())
+                usersDetailArrayList.add(uss);
         }
 
         chitietchitra_adapter adapter = new chitietchitra_adapter(
                 ChiTietChiTraActivity.this,
                 R.layout.activity_chi_tiet_chi_tra_lvitem,
-                listtmp);
+                usersDetailArrayList);
         listView.setAdapter(adapter);
 
         //Xử lý sự kiện

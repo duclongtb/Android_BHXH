@@ -41,8 +41,12 @@ public class danhsachtaikhoandangky_adapter extends ArrayAdapter {
             final users us = myArray.get(position);
             txtMaBHXH.setText(us.getMaBHXH()+"");
             txtHoTen.setText(us.getTenuser());
-            txtXemChiTiet.setText("Xem");
+            if(us.getGioitinh()==1){
+                txtXemChiTiet.setText("Nam");
 
+            }else {
+                txtXemChiTiet.setText("Nữ");
+            }
         }
         return convertView;
     }

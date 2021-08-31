@@ -12,19 +12,22 @@ import java.util.ArrayList;
 
 public class ChiTietLuongHuuActivity extends AppCompatActivity {
 
-    TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtDiaChi, txtTinhTrang, txtThoiGianNghiHuu;
+    TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtDiaChi, txtTinhTrang, txtThoiGianNghiHuu, txtLuongHuu;
     ImageButton imgback;
+    DBhelper db;
+    ArrayList<users> usersArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_luong_huu);
-
+        db =DBhelper.getInstance(this);
+        usersArrayList = db.getAllInfor();
         getWidget();
 
         //fakeCSDL
-        fakeCSDL fake = new fakeCSDL();
-        ArrayList<user_detail> user = fake.fakeuser_detail();
-        ArrayList<users> usersArrayList = fake.fakeusers();
+//        fakeCSDL fake = new fakeCSDL();
+//        ArrayList<users> user = fake.fakeusers();
+//        ArrayList<users> usersArrayList = fake.fakeusers();
 
         //setText
         Intent callerIntent = getIntent();
@@ -32,23 +35,26 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
         int ViTri = bundle.getInt("ViTri");
 
         users u = usersArrayList.get(ViTri);
-        user_detail u_d = user.get(ViTri);
+//        users u_d = user.get(ViTri);
 
         txtHoTen.setText(u.getTenuser());
         txtMaBHXH.setText(u.getMaBHXH()+"");
         txtNgaySinh.setText(u.getNgaysinh());
-        if(u.getGioitinh()){
+        if(u.getGioitinh()==1){
             txtGioiTinh.setText("Nam");
         }else {
             txtGioiTinh.setText("Nữ");
         }
         txtDiaChi.setText(u.getDiachi());
-        txtTinhTrang.setText("Tính tuổi nghỉ hưu");
-        if(u_d.getTinhtrangnghihuu()=="Đã nghỉ hưu"){
-            txtThoiGianNghiHuu.setText("------");
+        txtTinhTrang.setText(u.tinhtrangnghihuu);
+        if(u.getTinhtrangnghihuu()=="Đã nghỉ hưu"){
+            txtThoiGianNghiHuu.setText("---Đã nghỉ hưu---");
         }else {
-            txtThoiGianNghiHuu.setText("------");
+            txtThoiGianNghiHuu.setText("---Chưa nghỉ hưu---");
         }
+
+        int luongHuu = (int) ( u.getMucluong()*0.45);
+        txtLuongHuu.setText(luongHuu+"");
 
         imgback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,5 +73,6 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
         txtDiaChi = findViewById(R.id.txtDiaChi);
         txtTinhTrang = findViewById(R.id.txtTinhTrang);
         txtThoiGianNghiHuu = findViewById(R.id.txtThoiGianNghiHuu);
+        txtLuongHuu = findViewById(R.id.txtLuongHuu);
     }
 }
