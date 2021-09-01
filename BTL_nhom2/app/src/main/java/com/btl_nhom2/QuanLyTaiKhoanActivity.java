@@ -40,13 +40,7 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_tai_khoan);
         db =DBhelper.getInstance(this);
-        //fakeCSDL
-        if(db.getTotal()==0){
-            db.insertInfor(new users(123450, "Nguyen Van Duc", "23/07/1950", 1, 1001001, "01241440", "Hà nội", 8000000,"Đã trả","Đã nghỉ hưu"));
-            db.insertInfor(new users(123451, "Nguyen Thanh Thao", "23/07/1980", 0, 1001002, "01241441", "Hà nam", 7000000,"Chưa trả","Chưa nghỉ hưu"));
-            db.insertInfor(new users(123452, "Nguyen Duc Nam", "23/07/1975", 1, 1001003, "01241442", "Nam định", 8000000,"Chưa trả","Chưa nghỉ hưu"));
-            db.insertInfor(new users(123453, "Nguyen Thao Tam", "23/07/1955", 0, 1001004, "01241443", "Bắc Ninh", 9000000,"Chưa trả","Đã nghỉ hưu"));
-        }
+
         imgBtnBack = findViewById(R.id.imgBack);
         editTxtSearch = findViewById(R.id.editTxtSearch);
         listView = findViewById(R.id.lvTaiKhoan);

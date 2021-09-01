@@ -32,7 +32,7 @@ public class DBhelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + TABLE_USER + " (" +
                     MA_BHXH + " INTEGER NOT NULL PRIMARY KEY ," +
                     TEN_USER + " TEXT NOT NULL," +
-                    NGAY_SINH + " TEXT NOT NULL," +
+                    NGAY_SINH + " DATE NOT NULL," +
                     GIOI_TINH + " TEXT NOT NULL," +
                     SO_CMND + " INTEGER NOT NULL," +
                     SDT + " TEXT NOT NULL," +
@@ -52,7 +52,7 @@ public class DBhelper extends SQLiteOpenHelper {
                     DEN_THANG + " TEXT NOT NULL," +
                     TT_MUCDONG + " TEXT NOT NULL," +
                     TIEN_BHXH + " TEXT NOT NULL," +
-                    MA_BHXH + " INTEGER NOT NULL,"
+                    MA_BHXH + " INTEGER NOT NULL REFERENCES tblUsers,"
                     +"PRIMARY KEY (" + MA_BHXH + "," + TU_THANG + "," + DEN_THANG + ")"
                     +")";
 //                    "FOREIGN KEY(" + TT_MUCDONG + ") REFERENCES " + TABLE_USER + "(" + MA_BHXH + "))" ;
@@ -155,6 +155,16 @@ public class DBhelper extends SQLiteOpenHelper {
         cursor.close();
         return totalRows;
     }
+
+//    public int getAge(int id){
+//        SQLiteDatabase db = getReadableDatabase();
+//        String sql = "SELECT STRFTIME('%Y','NOW') - STRFTIME('%Y','"+ NGAY_SINH +"') AS AGE FROM "+TABLE_USER +" WHERE maBhxh = "+id;
+//        Cursor cursor = db.rawQuery(sql, null);
+//        cursor.moveToFirst();
+//        int age = cursor.getInt(0);
+//        cursor.close();
+//        return age;
+//    }
 
     public int getTotalMD(){
         SQLiteDatabase db = getReadableDatabase();
