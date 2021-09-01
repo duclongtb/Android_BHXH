@@ -208,15 +208,14 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String tuThang, denThang, tinhTrangMucDong;
-                int mucLuong, tienBHXH, maBHXH;
+                int tienBHXH, maBHXH;
 
                 tuThang = editTextTuThang.getText()+"";
                 denThang = editTextDenThang.getText()+"";
                 if(rdChuaDong.isChecked()){
                     tinhTrangMucDong = "Chưa đóng";
                 }else tinhTrangMucDong = "Đã đóng";
-                mucLuong = Integer.parseInt(txtMucLuong.getText()+"");
-                tienBHXH = (int) (0.105*mucLuong);
+                tienBHXH = tinhTienBHXH();
                 maBHXH = Integer.parseInt(txtMaBHXH.getText()+"");
                 String ID = txtMaBHXH.getText()+"";
 
@@ -244,15 +243,14 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String tuThang, denThang, tinhTrangMucDong;
-                int mucLuong, tienBHXH, maBHXH;
+                int tienBHXH, maBHXH;
 
                 tuThang = editTextTuThang.getText()+"";
                 denThang = editTextDenThang.getText()+"";
                 if(rdChuaDong.isChecked()){
                     tinhTrangMucDong = "Chưa đóng";
                 }else tinhTrangMucDong = "Đã đóng";
-                mucLuong = Integer.parseInt(txtMucLuong.getText()+"");
-                tienBHXH = (int) (0.105*mucLuong);
+                tienBHXH = tinhTienBHXH();
                 maBHXH = Integer.parseInt(txtMaBHXH.getText()+"");
 
                 //thêm vào csdl
@@ -284,6 +282,30 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
         });
     }
 
+    public int tinhTienBHXH(){
+        int mucLuong, tienBHXH;
+        mucLuong = Integer.parseInt(txtMucLuong.getText()+"");
+        int laythoigiandong = layThoiGianDong();
+        tienBHXH = (int) (0.105*mucLuong*laythoigiandong);
+        return tienBHXH;
+    }
+    public int layThoiGianDong(){
+        String layTuThang = String.valueOf(editTextTuThang.getText());
+        String[] items1 = layTuThang.split("/");
+        String m0=items1[0];
+        String y0=items1[1];
+        int thang0 = Integer.parseInt(m0);
+        int nam0 = Integer.parseInt(y0);
+
+        String layDenThang = String.valueOf(editTextDenThang.getText());
+        String[] items2 = layDenThang.split("/");
+        String m1=items2[0];
+        String y1=items2[1];
+        int thang1 = Integer.parseInt(m1);
+        int nam1 = Integer.parseInt(y1);
+        int time = thang1 - thang0 + (nam1 - nam0)*12;
+        return time;
+    }
     public void getWidget(){
         imgBack = findViewById(R.id.imgBack);
         imgCalendar = findViewById(R.id.imgCalendar);
