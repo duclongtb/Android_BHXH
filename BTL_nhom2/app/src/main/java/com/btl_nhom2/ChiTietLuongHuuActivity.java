@@ -15,7 +15,6 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
     TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtDiaChi, txtTinhTrang, txtThoiGianNghiHuu, txtLuongHuu;
     ImageButton imgback;
     DBhelper db;
-    String tinhTrangNghiHuu ="";
     ArrayList<users> usersArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,16 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
         //setText
         Intent callerIntent = getIntent();
         Bundle bundle = callerIntent.getBundleExtra("VITRI");
-        int ViTri = bundle.getInt("ViTri");
+        int MaBHXH = bundle.getInt("MaBHXH");
 
-        users u = usersArrayList.get(ViTri);
-//        users u_d = user.get(ViTri);
+        usersArrayList = db.getAllInfor();
+        users u = new users();
+        for(users x : usersArrayList){
+            if(x.getMaBHXH() == MaBHXH){
+                u = db.getInforByID("tblUsers","maBhxh", MaBHXH);
+                break;
+            }
+        }
 
         txtHoTen.setText(u.getTenuser());
         txtMaBHXH.setText(u.getMaBHXH()+"");
@@ -49,7 +54,7 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
             txtThoiGianNghiHuu.setText("55 tuổi");
         }
         txtDiaChi.setText(u.getDiachi());
-        txtTinhTrang.setText(u.tinhtrangnghihuu);
+        txtTinhTrang.setText(u.getTinhtrangnghihuu());
 
 //        if(u.getTinhtrangnghihuu()=="Đã nghỉ hưu"){
 //

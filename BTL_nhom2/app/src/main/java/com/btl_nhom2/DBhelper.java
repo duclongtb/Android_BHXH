@@ -336,15 +336,14 @@ public class DBhelper extends SQLiteOpenHelper {
         return lists;
     }
 
-    public ArrayList<users> getInforByID(String tableName, String fieldName, String id)
+    public users getInforByID(String tableName, String fieldName, int id)
     {
         SQLiteDatabase db = getReadableDatabase();
-        ArrayList<users> lists = new ArrayList<users>();
-        Cursor cursor = db.query(tableName, null, fieldName+"=?",
-                new String[]{id}, null, null, null);
+        users lists = new users();
+        Cursor cursor = db.query(tableName, null, fieldName+"= "+id,
+                null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
-            do {
-                lists.add(new users(cursor.getInt(0),
+                lists = new users(cursor.getInt(0),
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getInt(3),
@@ -354,8 +353,7 @@ public class DBhelper extends SQLiteOpenHelper {
                         cursor.getInt(7),
                         cursor.getString(8),
                         cursor.getString(9)
-                ));
-            } while (cursor.moveToNext());
+                );
             cursor.close();
         }
         return lists;

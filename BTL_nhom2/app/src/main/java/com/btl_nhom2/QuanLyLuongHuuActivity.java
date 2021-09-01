@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuanLyLuongHuuActivity extends AppCompatActivity {
 
@@ -42,6 +43,13 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvLuongHuu);
         spnQLLuongHuu = findViewById(R.id.spnLuongHuu);
 
+        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                QuanLyLuongHuuActivity.this,
+                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                usersArrayList);
+        listView.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -55,43 +63,29 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
         spnQLLuongHuu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemspn = spnQLLuongHuu.getSelectedItem().toString();
-                if(itemspn == "Đã nghỉ hưu"){
+                String itemspn = arr_[i];
+                if(itemspn.equals("Đã nghỉ hưu")){
                     usersArrayList.clear();
                     if(db!=null){
+                        listTmp.clear();
                         listTmp = db.getAllInforLuongHuu1();
                         usersArrayList.addAll(listTmp);
-                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                                QuanLyLuongHuuActivity.this,
-                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                                usersArrayList);
-                        listView.setAdapter(adapter1);
                         adapter1.notifyDataSetChanged();
                     }
-                }
-                if(itemspn == "Chưa nghỉ hưu"){
+                }else if(itemspn .equals("Chưa nghỉ hưu")){
                     usersArrayList.clear();
                     if(db!=null){
+                        listTmp.clear();
                         listTmp = db.getAllInforLuongHuu2();
                         usersArrayList.addAll(listTmp);
-                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                                QuanLyLuongHuuActivity.this,
-                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                                usersArrayList);
-                        listView.setAdapter(adapter1);
                         adapter1.notifyDataSetChanged();
                     }
-                }
-                if(itemspn == "Tất cả"){
+                }else {
                     usersArrayList.clear();
                     if(db!=null){
+                        listTmp.clear();
                         listTmp = db.getAllInfor();
                         usersArrayList.addAll(listTmp);
-                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                                QuanLyLuongHuuActivity.this,
-                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                                usersArrayList);
-                        listView.setAdapter(adapter1);
                         adapter1.notifyDataSetChanged();
                     }
                 }
@@ -117,7 +111,7 @@ public class QuanLyLuongHuuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle ViTri = new Bundle();
-                ViTri.putInt("ViTri", i);
+                ViTri.putInt("MaBHXH",usersArrayList.get(i).getMaBHXH());
                 Intent intent = new Intent(QuanLyLuongHuuActivity.this, ChiTietLuongHuuActivity.class);
                 intent.putExtra("VITRI",ViTri);
                 startActivity(intent);
