@@ -1,5 +1,6 @@
 package com.btl_nhom2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -7,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,13 +26,13 @@ public class XinChaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xin_chao);
-        db =DBhelper.getInstance(this);
-
-        //check CSDL
-        checkCsdl();
 
         menu = (ImageView) findViewById(R.id.menu);
         registerForContextMenu(menu);
+
+        db =DBhelper.getInstance(this);
+        //check CSDL
+        checkCsdl();
 
         txtXinChaoTenAdmin = (TextView) findViewById(R.id.txtXinChaoTenAdmin);
 
@@ -59,28 +62,6 @@ public class XinChaoActivity extends AppCompatActivity {
         String txtAdmin = bundle.getString("admin");
         txtXinChaoTenAdmin.setText("Xin chào, " + txtAdmin);
 
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(XinChaoActivity.this);
-                builder.setMessage("Bạn muốn đăng xuất khỏi ứng dụng?");
-                builder.setCancelable(true);
-                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
     }
 
     private class MyEnvent implements View.OnClickListener{
@@ -138,6 +119,42 @@ public class XinChaoActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_option,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        doSomthing(item);
+        return super.onContextItemSelected(item);
+    }
+
+    private void doSomthing(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuDangXuat:
+                final AlertDialog.Builder builder = new AlertDialog.Builder(XinChaoActivity.this);
+                builder.setMessage("Bạn muốn đăng xuất khỏi ứng dụng?");
+                builder.setCancelable(true);
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                break;
+        }
     }
 
     public void checkCsdl(){
