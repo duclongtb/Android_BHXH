@@ -52,38 +52,6 @@ public class QuanLyMucDongActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                if(db.getTotalDetail()==0){
-//            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",1600000, 123450));
-//            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",1600000, 123450));
-//            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",1600000, 123450));
-//            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",1600000, 123451));
-//            db.insertInforDetail(new user_detail("07/2028","12/2018","Chưa đóng",1600000, 123451));
-//            db.insertInforDetail(new user_detail("01/2019","06/2019","Chưa đóng",1600000, 123451));
-//            db.insertInforDetail(new user_detail("01/2018","06/2018","Chưa đóng",1600000, 123452));
-//            db.insertInforDetail(new user_detail("07/2018","12/2018","Chưa đóng",1600000, 123452));
-//            db.insertInforDetail(new user_detail("01/2019","06/2019","Chưa đóng",1600000, 123452));
-//            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",1600000, 123453));
-//            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",1600000, 123453));
-//            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",1600000, 123453));
-//        }
-//                if(db!=null){
-//                    listTmp1 = db.getAllInforDetail();
-//                    usersDetailArrayList.addAll(listTmp1);
-//                    adapter1 = new chitietmucdong_adapter(
-//                            QuanLyMucDongActivity.this, R.layout.activity_chi_tiet_muc_dong_lvitem,
-//                            usersDetailArrayList);
-//                    listView.setAdapter(adapter1);
-//                }
-                Bundle ViTri = new Bundle();
-                ViTri.putInt("ViTri", i);
-                Intent intent = new Intent(QuanLyMucDongActivity.this, ChiTietMucDongActivity.class);
-                intent.putExtra("VITRI",ViTri);
-                startActivity(intent);
-            }
-        });
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,49 +73,75 @@ public class QuanLyMucDongActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String s = editTxtSearch.getText().toString();
+                s = s.toLowerCase();
                 if(s.length()==0){
-                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                    adapter= new danhsachtaikhoandangky_adapter(
                             QuanLyMucDongActivity.this,
                             R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                            usersArrayList);
-                    listView.setAdapter(adapter1);
-                    adapter1.notifyDataSetChanged();
+                            db.getAllInfor());
+                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
                 if(s.length()>=2){
-                    timTheoTen();
+                    //Kiểm tra và update lại listview
+                    name = s;
+                    listTmp = db.getAllInfor();
+                    usersArrayList.clear();
+                    if(name.length()>2){
+                        for(users u : listTmp){
+                            String nameUser = u.getTenuser().toLowerCase();
+                            if(nameUser.indexOf(name)>=0){
+                                usersArrayList.add(u);
+                            }
+                        }
+                    }else {
+                        usersArrayList.clear();
+                    }
+                    adapter.notifyDataSetChanged();
                 }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle ViTri = new Bundle();
+                ViTri.putInt("MaBHXH", usersArrayList.get(i).getMaBHXH());
+                Intent intent = new Intent(QuanLyMucDongActivity.this, ChiTietMucDongActivity.class);
+                intent.putExtra("VITRI",ViTri);
+                startActivity(intent);
             }
         });
 
     }
 
-    private void timTheoTen() {
-        String s = editTxtSearch.getText().toString();
-        s = s.toLowerCase();
-
-        //Kiểm tra và update lại listview
-        name = s;
-        tienHanhKiemTra();
-    }
-
-    private void tienHanhKiemTra(){
-        ArrayList<users> uss = db.getAllInfor();
-        ArrayList<users> uss_check = new ArrayList<users>();
-        if(name.length()>2){
-            for(users u : uss){
-                String nameUser = u.getTenuser().toLowerCase();
-                if(nameUser.indexOf(name)>=0){
-                    uss_check.add(u);
-                }
-            }
-        }else {
-            uss_check = new ArrayList<>();
-        }
-        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                QuanLyMucDongActivity.this,
-                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                uss_check);
-        listView.setAdapter(adapter1);
-        adapter1.notifyDataSetChanged();
-    }
+//    private void timTheoTen() {
+//        String s = editTxtSearch.getText().toString();
+//        s = s.toLowerCase();
+//
+//        //Kiểm tra và update lại listview
+//        name = s;
+//        tienHanhKiemTra();
+//    }
+//
+//    private void tienHanhKiemTra(){
+//        ArrayList<users> uss = db.getAllInfor();
+//        ArrayList<users> uss_check = new ArrayList<users>();
+//        if(name.length()>2){
+//            for(users u : uss){
+//                String nameUser = u.getTenuser().toLowerCase();
+//                if(nameUser.indexOf(name)>=0){
+//                    uss_check.add(u);
+//                }
+//            }
+//        }else {
+//            uss_check = new ArrayList<>();
+//        }
+//        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+//                QuanLyMucDongActivity.this,
+//                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+//                uss_check);
+//        listView.setAdapter(adapter1);
+//        adapter1.notifyDataSetChanged();
+//    }
 }

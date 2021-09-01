@@ -33,9 +33,16 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
 
         //setText
         Intent callerIntent = getIntent();
-        Bundle bundle = callerIntent.getBundleExtra("GIOITINH");
-        int ViTri = bundle.getInt("GioiTinh");
-        users u = usersArrayList.get(ViTri);
+        Bundle bundle = callerIntent.getBundleExtra("MABHXH");
+        int MaBHXH = bundle.getInt("MaBHXH");
+
+        users u = new users();
+        for(users x : usersArrayList){
+            if(x.getMaBHXH() == MaBHXH){
+                u = db.getInforByID("tblUsers","maBhxh", MaBHXH);
+                break;
+            }
+        }
 
         if(u.getGioitinh()==1){
             imgGioiTinh.setImageResource(R.drawable.boyicon);
@@ -55,9 +62,6 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
         }else  {
             txtGioiTinh.setText("nữ");
         }
-
-
-
 
 
         txtChiTietMucDong.setOnClickListener(new MyEnvent());

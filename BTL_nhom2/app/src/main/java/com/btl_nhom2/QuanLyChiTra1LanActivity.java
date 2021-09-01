@@ -48,7 +48,7 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
 
         listTmp = db.getAllInforChiTra1();
         usersArrayList.addAll(listTmp);
-        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+        adapter1= new danhsachtaikhoandangky_adapter(
                 QuanLyChiTra1LanActivity.this,
                 R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
                 usersArrayList);
@@ -145,49 +145,59 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String s = editSearch.getText().toString();
+                s = s.toLowerCase();
                 if(s.length()==0){
                     danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
                             QuanLyChiTra1LanActivity.this,
                             R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                            usersArrayList);
+                            db.getAllInfor());
                     listView.setAdapter(adapter1);
                     adapter1.notifyDataSetChanged();
                 }
                 if(s.length()>=2){
-                    timTheoTen();
+                    //Kiểm tra và update lại listview
+                    name = s;
+                    listTmp = db.getAllInfor();
+                    usersArrayList.clear();
+                    if(name.length()>2){
+                        for(users u : listTmp){
+                            String nameUser = u.getTenuser().toLowerCase();
+                            if(nameUser.indexOf(name)>=0){
+                                usersArrayList.add(u);
+                            }
+                        }
+                    }else {
+                        usersArrayList.clear();
+                    }
+                    adapter1.notifyDataSetChanged();
                 }
             }
         });
 
     }
 
-    private void timTheoTen() {
-        String s = editSearch.getText().toString();
-        s = s.toLowerCase();
+//    private void timTheoTen() {
+//        String s = editSearch.getText().toString();
+//        s = s.toLowerCase();
+//
+//        //Kiểm tra và update lại listview
+//        name = s;
+//        tienHanhKiemTra();
+//    }
 
-        //Kiểm tra và update lại listview
-        name = s;
-        tienHanhKiemTra();
-    }
-
-    private void tienHanhKiemTra(){
-        ArrayList<users> uss = db.getAllInfor();
-        ArrayList<users> uss_check = new ArrayList<users>();
-        if(name.length()>2){
-            for(users u : uss){
-                String nameUser = u.getTenuser().toLowerCase();
-                if(nameUser.indexOf(name)>=0){
-                    uss_check.add(u);
-                }
-            }
-        }else {
-            uss_check = new ArrayList<>();
-        }
-        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                QuanLyChiTra1LanActivity.this,
-                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                uss_check);
-        listView.setAdapter(adapter1);
-        adapter1.notifyDataSetChanged();
-    }
+//    private void tienHanhKiemTra(){
+//        ArrayList<users> uss = db.getAllInfor();
+//        usersArrayList.clear();
+//        if(name.length()>2){
+//            for(users u : uss){
+//                String nameUser = u.getTenuser().toLowerCase();
+//                if(nameUser.indexOf(name)>=0){
+//                    usersArrayList.add(u);
+//                }
+//            }
+//        }else {
+//            usersArrayList.clear();
+//        }
+//        adapter1.notifyDataSetChanged();
+//    }
 }

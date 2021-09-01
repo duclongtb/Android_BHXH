@@ -56,22 +56,20 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
         //setText
         Intent callerIntent = getIntent();
         Bundle bundle = callerIntent.getBundleExtra("VITRI");
-        int ViTri = bundle.getInt("ViTri");
-        users u = usersArrayList.get(ViTri);
-//        user_detail u1 = usersDetailArrayList.get(ViTri);
+        int MaBHXH = bundle.getInt("MaBHXH");
+
+        users u = new users();
+        for(users x : usersArrayList){
+            if(x.getMaBHXH() == MaBHXH){
+                u = db.getInforByID("tblUsers","maBhxh", MaBHXH);
+                break;
+            }
+        }
+
         txtHoTen.setText(u.getTenuser());
         txtMaBHXH.setText(u.getMaBHXH()+"");
-//        editTextTuThang.setText("");
-//        editTextDenThang.setText("");
         txtMucLuong.setText(u.getMucluong()+"");
-//        Intent callerIntent1 = getIntent();
-//        Bundle bundle1 = callerIntent1.getBundleExtra("VITRI1");
-//        int Vitri1 = bundle1.getInt("ViTri1");
-//        user_detail u1 = usersDetailArrayList.get(ViTri);
-//        txtTuThang.setText(u1.getTuthang());
-//        txtDenThang.setText(u1.getDenthang());
-//        txtTinhTrang.setText(u1.getTinhtrangmucdong());
-//        txtTienBHXH.setText(u1.getTienBHXH());
+
 
         if(db.getTotalDetail()==0){
             db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",892500, 123450));
@@ -228,7 +226,7 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
                     usersDetailArrayList.clear();
                     listTmp1 = db.getAllInforDetail();
                     for (user_detail uss : listTmp1) {
-                        if(uss.getMaBHXH()==u.getMaBHXH())
+                        if(uss.getMaBHXH()==MaBHXH)
                             usersDetailArrayList.add(uss);
                     }
                     adapter1 = new chitietmucdong_adapter(
@@ -263,7 +261,7 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
                     usersDetailArrayList.clear();
                     listTmp1 = db.getAllInforDetail();
                     for (user_detail uss : listTmp1) {
-                        if(uss.getMaBHXH()==u.getMaBHXH())
+                        if(uss.getMaBHXH()==MaBHXH)
                             usersDetailArrayList.add(uss);
                     }
                     adapter1 = new chitietmucdong_adapter(

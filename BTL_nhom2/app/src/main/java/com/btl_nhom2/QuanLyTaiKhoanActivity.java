@@ -66,9 +66,9 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle ViTri = new Bundle();
-                ViTri.putInt("GioiTinh", i);
+                ViTri.putInt("MaBHXH", usersArrayList.get(i).getMaBHXH());
                 Intent intent = new Intent(QuanLyTaiKhoanActivity.this, ChiTietTaiKhoanActivity.class);
-                intent.putExtra("GIOITINH",ViTri);
+                intent.putExtra("MABHXH",ViTri);
                 startActivity(intent);
             }
         });
@@ -87,48 +87,63 @@ public class QuanLyTaiKhoanActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String s = editTxtSearch.getText().toString();
+                s = s.toLowerCase();
                 if(s.length()==0){
-                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                    adapter= new danhsachtaikhoandangky_adapter(
                             QuanLyTaiKhoanActivity.this,
                             R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                            usersArrayList);
-                    listView.setAdapter(adapter1);
-                    adapter1.notifyDataSetChanged();
+                            db.getAllInfor());
+                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
                 if(s.length()>=2){
-                    timTheoTen();
+                    //Kiểm tra và update lại listview
+                    name = s;
+                    listTmp = db.getAllInfor();
+                    usersArrayList.clear();
+                    if(name.length()>2){
+                        for(users u : listTmp){
+                            String nameUser = u.getTenuser().toLowerCase();
+                            if(nameUser.indexOf(name)>=0){
+                                usersArrayList.add(u);
+                            }
+                        }
+                    }else {
+                        usersArrayList.clear();
+                    }
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
     }
 
-    private void timTheoTen() {
-        String s = editTxtSearch.getText().toString();
-        s = s.toLowerCase();
-
-        //Kiểm tra và update lại listview
-        name = s;
-        tienHanhKiemTra();
-    }
-
-    private void tienHanhKiemTra(){
-        ArrayList<users> uss = db.getAllInfor();
-        ArrayList<users> uss_check = new ArrayList<users>();
-        if(name.length()>2){
-            for(users u : uss){
-                String nameUser = u.getTenuser().toLowerCase();
-                if(nameUser.indexOf(name)>=0){
-                    uss_check.add(u);
-                }
-            }
-        }else {
-            uss_check = new ArrayList<>();
-        }
-        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                QuanLyTaiKhoanActivity.this,
-                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                uss_check);
-        listView.setAdapter(adapter1);
-        adapter1.notifyDataSetChanged();
-    }
+//    private void timTheoTen() {
+//        String s = editTxtSearch.getText().toString();
+//        s = s.toLowerCase();
+//
+//        //Kiểm tra và update lại listview
+//        name = s;
+//        tienHanhKiemTra();
+//    }
+//
+//    private void tienHanhKiemTra(){
+//        ArrayList<users> uss = db.getAllInfor();
+//        ArrayList<users> uss_check = new ArrayList<users>();
+//        if(name.length()>2){
+//            for(users u : uss){
+//                String nameUser = u.getTenuser().toLowerCase();
+//                if(nameUser.indexOf(name)>=0){
+//                    uss_check.add(u);
+//                }
+//            }
+//        }else {
+//            uss_check = new ArrayList<>();
+//        }
+//        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+//                QuanLyTaiKhoanActivity.this,
+//                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+//                uss_check);
+//        listView.setAdapter(adapter1);
+//        adapter1.notifyDataSetChanged();
+//    }
 }
