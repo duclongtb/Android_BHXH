@@ -15,6 +15,7 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
     TextView txtHoTen, txtMaBHXH, txtNgaySinh, txtGioiTinh, txtDiaChi, txtTinhTrang, txtThoiGianNghiHuu, txtLuongHuu;
     ImageButton imgback;
     DBhelper db;
+    String tinhTrangNghiHuu ="";
     ArrayList<users> usersArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +43,19 @@ public class ChiTietLuongHuuActivity extends AppCompatActivity {
         txtNgaySinh.setText(u.getNgaysinh());
         if(u.getGioitinh()==1){
             txtGioiTinh.setText("Nam");
+            txtThoiGianNghiHuu.setText("60 tuổi");
         }else {
             txtGioiTinh.setText("Nữ");
+            txtThoiGianNghiHuu.setText("55 tuổi");
         }
         txtDiaChi.setText(u.getDiachi());
         txtTinhTrang.setText(u.tinhtrangnghihuu);
-        if(u.getTinhtrangnghihuu()=="Đã nghỉ hưu"){
-            txtThoiGianNghiHuu.setText("---Đã nghỉ hưu---");
-        }else {
-            txtThoiGianNghiHuu.setText("---Chưa nghỉ hưu---");
-        }
+
+//        if(u.getTinhtrangnghihuu()=="Đã nghỉ hưu"){
+//
+//        }else {
+//            txtThoiGianNghiHuu.setText("---Chưa nghỉ hưu---");
+//        }
 
         int luongHuu = (int) ( u.getMucluong()*0.45);
         txtLuongHuu.setText(luongHuu+"");

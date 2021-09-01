@@ -226,9 +226,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -236,7 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="left"
-            android:text="Thời gian dự tính được hưởng chế độ lương hưu: "
+            android:text="Độ tuổi dự tính được hưởng chế độ lương hưu: "
             android:textColor="@color/black"
             android:textSize="15dp" />
 

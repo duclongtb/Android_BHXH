@@ -18,10 +18,15 @@ public class XinChaoActivity extends AppCompatActivity {
     ImageButton imgBtnQuanLyTaiKhoan, imgQuanLyMucDong, imgQuanLyChiTra, imgQuanLyLuongHuu;
     TextView txtQuanLyTaiKhoan, txtQuanLyMucDong, txtQuanLyChiTra, txtQuanLyLuongHuu,txtXinChaoTenAdmin;
     ImageView menu;
+    DBhelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xin_chao);
+        db =DBhelper.getInstance(this);
+
+        //check CSDL
+        checkCsdl();
 
         menu = (ImageView) findViewById(R.id.menu);
         registerForContextMenu(menu);
@@ -133,5 +138,17 @@ public class XinChaoActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public void checkCsdl(){
+        if(db.getTotal()==0){
+            db.insertInfor(new users(123450, "Nguyen Van Duc", "23/07/1950", 1, 1001001, "01241440", "Hà Nội", 8500000,"Đã trả","Đã nghỉ hưu"));
+            db.insertInfor(new users(123451, "Nguyen Thanh Thao", "23/07/1980", 0, 1001002, "01241441", "Hà Nam", 7300000,"Chưa trả","Chưa nghỉ hưu"));
+            db.insertInfor(new users(123452, "Nguyen Duc Nam", "23/07/1975", 1, 1001003, "01241442", "Nam Định", 8100000,"Chưa trả","Chưa nghỉ hưu"));
+            db.insertInfor(new users(123453, "Nguyen Thao Tam", "23/07/1955", 0, 1001004, "01241443", "Bắc Ninh", 9200000,"Chưa trả","Đã nghỉ hưu"));
+            db.insertInfor(new users(123454, "Do Anh Duc", "23/06/1995", 1, 1001005, "01242342", "Thái Bình", 9400000,"Chưa trả","Chưa nghỉ hưu"));
+            db.insertInfor(new users(123455, "Phan Van Long", "11/07/2000", 1, 1001044, "01241123", "Hải Phòng", 10000000,"Chưa trả","Chưa nghỉ hưu"));
+            db.insertInfor(new users(123456, "Phi Hoang Dang", "20/01/1965", 1, 1001344, "01241532", "Ninh Bình", 9600000,"Chưa trả","Chưa nghỉ hưu"));
+        }
     }
 }
