@@ -38,8 +38,15 @@ public class ChiTietChiTraActivity extends AppCompatActivity {
         //setText
         Intent callerIntent = getIntent();
         Bundle bundle = callerIntent.getBundleExtra("VITRI");
-        int ViTri = bundle.getInt("ViTri");
-        users u = usersArrayList.get(ViTri);
+        int MaBHXH = bundle.getInt("MaBHXH");
+
+        users u = new users();
+        for(users x : usersArrayList){
+            if(x.getMaBHXH() == MaBHXH){
+                u = db.getInforByID("tblUsers","maBhxh", MaBHXH);
+                break;
+            }
+        }
 //        users u_d = user.get(ViTri);
 
         txtHoTen.setText(u.getTenuser());

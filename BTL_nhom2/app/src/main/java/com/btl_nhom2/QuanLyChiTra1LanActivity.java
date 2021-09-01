@@ -46,6 +46,15 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
         spnQLChiTra = findViewById(R.id.spnQLChiTra);
         txtDieuKienChiTra = (TextView) findViewById(R.id.txtDieuKienNhanBHXH);
 
+        listTmp = db.getAllInforChiTra1();
+        usersArrayList.addAll(listTmp);
+        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
+                QuanLyChiTra1LanActivity.this,
+                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
+                usersArrayList);
+        listView.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,arr);
@@ -64,11 +73,6 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
                     if(db!=null){
                         listTmp = db.getAllInforChiTra1();
                         usersArrayList.addAll(listTmp);
-                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                                QuanLyChiTra1LanActivity.this,
-                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                                usersArrayList);
-                        listView.setAdapter(adapter1);
                         adapter1.notifyDataSetChanged();
                     }
                 }
@@ -77,11 +81,6 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
                     if(db!=null){
                         listTmp = db.getAllInforChiTra2();
                         usersArrayList.addAll(listTmp);
-                        danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                                QuanLyChiTra1LanActivity.this,
-                                R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                                usersArrayList);
-                        listView.setAdapter(adapter1);
                         adapter1.notifyDataSetChanged();
                     }
                 }
@@ -90,11 +89,6 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
                         if(db!=null){
                             listTmp = db.getAllInfor();
                             usersArrayList.addAll(listTmp);
-                            danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                                    QuanLyChiTra1LanActivity.this,
-                                    R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                                    usersArrayList);
-                            listView.setAdapter(adapter1);
                             adapter1.notifyDataSetChanged();
                     }
                 }
@@ -106,11 +100,6 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
                 if(db!=null){
                     listTmp = db.getAllInfor();
                     usersArrayList.addAll(listTmp);
-                    danhsachtaikhoandangky_adapter  adapter1= new danhsachtaikhoandangky_adapter(
-                            QuanLyChiTra1LanActivity.this,
-                            R.layout.activity_danh_sach_tai_khoan_dang_ky_lvitem,
-                            usersArrayList);
-                    listView.setAdapter(adapter1);
                     adapter1.notifyDataSetChanged();
                 }
             }
@@ -120,7 +109,7 @@ public class QuanLyChiTra1LanActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle ViTri = new Bundle();
-                ViTri.putInt("ViTri", i);
+                ViTri.putInt("MaBHXH", usersArrayList.get(i).getMaBHXH());
                 Intent intent = new Intent(QuanLyChiTra1LanActivity.this, ChiTietChiTraActivity.class);
                 intent.putExtra("VITRI",ViTri);
                 startActivity(intent);
