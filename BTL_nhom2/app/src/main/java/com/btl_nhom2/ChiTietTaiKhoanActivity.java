@@ -25,13 +25,10 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
         db =DBhelper.getInstance(this);
-        //fakeCSDL
-//        fakeCSDL fake = new fakeCSDL();
-//        usersArrayList= fake.fakeusers();
         usersArrayList = db.getAllInfor();
         getWidget();
 
-        //setText
+        //lấy mã BHXH thông qua bundle từ activity QuanLyTaiKhoan
         Intent callerIntent = getIntent();
         Bundle bundle = callerIntent.getBundleExtra("MABHXH");
         int MaBHXH = bundle.getInt("MaBHXH");
@@ -114,37 +111,34 @@ public class ChiTietTaiKhoanActivity extends AppCompatActivity {
 
     private void chiTietChiTra() {
         Intent callerIntent = getIntent();
-        Bundle bundle = callerIntent.getBundleExtra("GIOITINH");
-        int ViTri = bundle.getInt("GioiTinh");
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("ViTri", ViTri);
+        Bundle bundle = callerIntent.getBundleExtra("MABHXH");
+        int MaBHXH = bundle.getInt("MaBHXH");
+        Bundle ViTri = new Bundle();
+        ViTri.putInt("MaBHXH", MaBHXH);
         Intent intent = new Intent(ChiTietTaiKhoanActivity.this, ChiTietChiTraActivity.class);
-        intent.putExtra("VITRI",bundle1);
+        intent.putExtra("VITRI",ViTri);
         startActivity(intent);
     }
 
     private void chiTietLuongHuu() {
         Intent callerIntent = getIntent();
-        Bundle bundle = callerIntent.getBundleExtra("GIOITINH");
-        int ViTri = bundle.getInt("GioiTinh");
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("ViTri", ViTri);
+        Bundle bundle = callerIntent.getBundleExtra("MABHXH");
+        int MaBHXH = bundle.getInt("MaBHXH");
+        Bundle ViTri = new Bundle();
+        ViTri.putInt("MaBHXH", MaBHXH);
         Intent intent = new Intent(ChiTietTaiKhoanActivity.this, ChiTietLuongHuuActivity.class);
-        intent.putExtra("VITRI",bundle1);
+        intent.putExtra("VITRI",ViTri);
         startActivity(intent);
     }
 
     private void chiTietMucDong() {
         Intent callerIntent = getIntent();
-        Bundle bundle = callerIntent.getBundleExtra("GIOITINH");
-        int ViTri = bundle.getInt("GioiTinh");
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("ViTri", ViTri);
+        Bundle bundle = callerIntent.getBundleExtra("MABHXH");
+        int MaBHXH = bundle.getInt("MaBHXH");
+        Bundle ViTri = new Bundle();
+        ViTri.putInt("MaBHXH", MaBHXH);
         Intent intent = new Intent(ChiTietTaiKhoanActivity.this, ChiTietMucDongActivity.class);
-        intent.putExtra("VITRI",bundle1);
+        intent.putExtra("VITRI",ViTri);
         startActivity(intent);
     }
 }

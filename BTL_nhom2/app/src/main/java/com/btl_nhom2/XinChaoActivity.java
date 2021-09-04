@@ -170,5 +170,22 @@ public class XinChaoActivity extends AppCompatActivity {
             db.insertInfor(new users(123455, "Phan Van Long", "11/07/2000", 1, 1001044, "01241123", "Hải Phòng", 10000000,"Chưa trả","Chưa nghỉ hưu"));
             db.insertInfor(new users(123456, "Phi Hoang Dang", "20/01/1965", 1, 1001344, "01241532", "Ninh Bình", 9600000,"Chưa trả","Chưa nghỉ hưu"));
         }
+        if(db.getTotalDetail()==0){
+            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",892500, 123450));
+            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",892500, 123450));
+            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",892500, 123450));
+            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",766500, 123451));
+            db.insertInforDetail(new user_detail("07/2028","12/2018","Chưa đóng",766500, 123451));
+            db.insertInforDetail(new user_detail("01/2019","06/2019","Chưa đóng",766500, 123451));
+            db.insertInforDetail(new user_detail("01/2018","06/2018","Chưa đóng",850500, 123452));
+            db.insertInforDetail(new user_detail("07/2018","12/2018","Chưa đóng",850500, 123452));
+            db.insertInforDetail(new user_detail("01/2019","06/2019","Chưa đóng",850500, 123452));
+            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",966000, 123453));
+            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",966000, 123453));
+            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",966000, 123453));
+            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",966000, 123454));
+            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",966000, 123455));
+            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",966000, 123456));
+        }
     }
 }

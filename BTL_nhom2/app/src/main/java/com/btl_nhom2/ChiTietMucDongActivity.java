@@ -70,21 +70,6 @@ public class ChiTietMucDongActivity extends AppCompatActivity {
         txtMaBHXH.setText(u.getMaBHXH()+"");
         txtMucLuong.setText(u.getMucluong()+"");
 
-
-        if(db.getTotalDetail()==0){
-            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",892500, 123450));
-            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",892500, 123450));
-            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",892500, 123450));
-            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",766500, 123451));
-            db.insertInforDetail(new user_detail("07/2028","12/2018","Chưa đóng",766500, 123451));
-            db.insertInforDetail(new user_detail("01/2019","06/2019","Chưa đóng",766500, 123451));
-            db.insertInforDetail(new user_detail("01/2018","06/2018","Chưa đóng",850500, 123452));
-            db.insertInforDetail(new user_detail("07/2018","12/2018","Chưa đóng",850500, 123452));
-            db.insertInforDetail(new user_detail("01/2019","06/2019","Chưa đóng",850500, 123452));
-            db.insertInforDetail(new user_detail("01/2018","06/2018","Đã đóng",966000, 123453));
-            db.insertInforDetail(new user_detail("07/2018","12/2018","Đã đóng",966000, 123453));
-            db.insertInforDetail(new user_detail("01/2019","06/2019","Đã đóng",966000, 123453));
-        }
         if(db!=null){
             listTmp1 = db.getAllInforDetail();
             for (user_detail uss : listTmp1) {

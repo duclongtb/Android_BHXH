@@ -55,11 +55,7 @@ public class DBhelper extends SQLiteOpenHelper {
                     MA_BHXH + " INTEGER NOT NULL REFERENCES tblUsers,"
                     +"PRIMARY KEY (" + MA_BHXH + "," + TU_THANG + "," + DEN_THANG + ")"
                     +")";
-//                    "FOREIGN KEY(" + TT_MUCDONG + ") REFERENCES " + TABLE_USER + "(" + MA_BHXH + "))" ;
-//                    TT_CHITRA + " INTEGER NOT NULL," +
-//                    TT_NGHIHUU + " TEXT NOT NULL," +
-//                    MA_BHXH + " INTEGER NOT NULL PRIMARY KEY " +
-//                    ")" ;
+
     private static DBhelper sInstance;
     public static DBhelper getInstance(Context context) {
         if (sInstance == null) {
@@ -137,8 +133,6 @@ public class DBhelper extends SQLiteOpenHelper {
         values.put(DEN_THANG, user_detail.getDenthang());
         values.put(TT_MUCDONG, user_detail.getTinhtrangmucdong());
         values.put(TIEN_BHXH, user_detail.getTienBHXH());
-//        values.put(TT_CHITRA, user_detail.getTinhtrangchitra());
-//        values.put(TT_NGHIHUU, user_detail.getTinhtrangnghihuu());
         values.put(MA_BHXH, user_detail.getMaBHXH());
         long rowId = db.insert(TABLE_USER_DETAIL, null, values);
         db.close();
@@ -150,27 +144,6 @@ public class DBhelper extends SQLiteOpenHelper {
     public int getTotal(){
         SQLiteDatabase db = getReadableDatabase();
         String sql = "SELECT * FROM "+ TABLE_USER;
-        Cursor cursor = db.rawQuery(sql,null);
-        int totalRows = cursor.getCount();
-        cursor.close();
-        return totalRows;
-    }
-
-//    public int getAge(int id){
-//        SQLiteDatabase db = getReadableDatabase();
-//        String sql = "SELECT STRFTIME('%Y','NOW') - STRFTIME('%Y','"+ NGAY_SINH +"') AS AGE FROM "+TABLE_USER +" WHERE maBhxh = "+id;
-//        Cursor cursor = db.rawQuery(sql, null);
-//        cursor.moveToFirst();
-//        int age = cursor.getInt(0);
-//        cursor.close();
-//        return age;
-//    }
-
-    public int getTotalMD(){
-        SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT a." + MA_BHXH + ", a." + TEN_USER + ", b." + TU_THANG + ", b." + DEN_THANG + ", a." + MUC_LUONG +
-                ", b." + TT_MUCDONG + " FROM " +  TABLE_USER + " a LEFT JOIN " + TABLE_USER_DETAIL +
-                " b ON a." + MA_BHXH + " = b." + MA_BHXH;
         Cursor cursor = db.rawQuery(sql,null);
         int totalRows = cursor.getCount();
         cursor.close();

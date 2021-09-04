@@ -14,30 +14,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-//    Button btnDangNhap;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        //fakeCSDL();
-//
-//        btnDangNhap = findViewById(R.id.btnDangNhap);
-//
-//        btnDangNhap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, XinChaoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//    }
-//    //         lỗi
-//    private void fakeCSDL (){
-//
-//    }
-
     EditText editTenTk, editMatKhau;
     Button btnDangNhap, btnDangKy;
     DBhelper DB;
